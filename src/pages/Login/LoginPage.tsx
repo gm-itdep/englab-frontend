@@ -106,7 +106,7 @@ export function LoginPage() {
                       aria-pressed={showPassword}
                     >
                       <span className={styles.eyeIcon}>
-                        <img src={iconEye} alt="" width={12} height={12} />
+                        <img src={iconEye} alt="" width={16} height={16} />
                       </span>
                     </button>
                   }

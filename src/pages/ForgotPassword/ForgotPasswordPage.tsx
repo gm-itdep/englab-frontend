@@ -9,7 +9,6 @@ import {
   type ForgotPasswordFieldErrors,
 } from '../../shared/validation/forgotPasswordValidation';
 import logoEnglab from '../../assets/images/logo-englab.svg';
-import iconArrow from '../../assets/icons/arrow.svg';
 import styles from './ForgotPasswordPage.module.css';
 
 export function ForgotPasswordPage() {
@@ -118,17 +117,7 @@ export function ForgotPasswordPage() {
               {isLoading ? t.forgotPassword.loading : t.forgotPassword.submit}
             </Button>
 
-            <Button
-              type="button"
-              variant="secondary"
-              fullWidth
-              startIcon={
-                <span className={styles.backIcon}>
-                  <img src={iconArrow} alt="" width={17} height={17} />
-                </span>
-              }
-              onClick={() => navigate('/login')}
-            >
+            <Button type="button" variant="secondary" fullWidth onClick={() => navigate('/login')}>
               {t.forgotPassword.backToLogin}
             </Button>
           </div>
