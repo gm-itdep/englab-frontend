@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { getSession } from '../../shared/auth/mockAuth';
-import { OnboardingGoalModal, type LearningGoalId } from './OnboardingGoalModal';
+import { OnboardingModal, type OnboardingAnswers } from './OnboardingModal';
 import styles from './HomePage.module.css';
 
 export function HomePage() {
@@ -16,14 +16,14 @@ export function HomePage() {
     setIsOnboardingOpen(false);
   };
 
-  const handleContinueOnboarding = (_goalId: LearningGoalId) => {
+  const handleCompleteOnboarding = (_answers: OnboardingAnswers) => {
     setIsOnboardingOpen(false);
   };
 
   return (
     <main className={styles.page}>
       {isOnboardingOpen ? (
-        <OnboardingGoalModal onClose={handleCloseOnboarding} onContinue={handleContinueOnboarding} />
+        <OnboardingModal onClose={handleCloseOnboarding} onComplete={handleCompleteOnboarding} />
       ) : null}
     </main>
   );
