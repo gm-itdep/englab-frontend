@@ -71,6 +71,36 @@ export const ru = {
     welcome: 'Добро пожаловать',
     logout: 'Выйти',
   },
+  onboarding: {
+    title: 'Цель обучения',
+    step: 'Шаг 1 из 4',
+    close: 'Закрыть',
+    question: 'Для чего вы изучаете язык?',
+    questionHint: 'Это поможет подобрать преподавателей',
+    continue: 'Продолжить',
+    goals: {
+      speaking: {
+        title: 'Разговорная практика',
+        description: 'Свободно говорить в повседневных ситуациях',
+      },
+      business: {
+        title: 'Деловое общение',
+        description: 'Эффективное общение в работе и переговорах',
+      },
+      travel: {
+        title: 'Путешествия',
+        description: 'Легко общайтесь в поездках за границей',
+      },
+      interview: {
+        title: 'Подготовка к собеседованию',
+        description: 'Уверенно пройдите интервью на английском',
+      },
+      exam: {
+        title: 'Подготовка к экзамену',
+        description: 'IELTS, TOEFL, Cambridge и другие экзамены',
+      },
+    },
+  },
   forgotPassword: {
     title: 'Восстановление пароля',
     subtitle:

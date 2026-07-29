@@ -11,6 +11,7 @@
   --color-gray-1000: #272727;
 
   /* Colors — Primary */
+  --color-primary-50: #f9fee8;
   --color-primary-100: #f4fcd1;
   --color-primary-500: #c7f21a;
   --color-primary-700: #809a18;
@@ -28,12 +29,14 @@
   --font-family-secondary: 'Manrope', system-ui, sans-serif;
 
   --font-size-h2: 24px;
+  --font-size-body-l: 18px;
   --font-size-body-s: 14px;
   --font-size-button: 16px;
   --font-size-mono: 13px;
   --font-size-caption: 12px;
 
   --line-height-h2: 28px;
+  --line-height-body-l: 22px;
   --line-height-body-s: 18px;
   --line-height-button: 20px;
   --line-height-mono: 16px;

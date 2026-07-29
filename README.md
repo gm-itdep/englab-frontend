@@ -9,6 +9,14 @@
 - React Router (code splitting по маршрутам)
 - CSS Modules + design tokens из Figma
 
+## Демо
+
+GitHub Pages: https://gm-itdep.github.io/englab-frontend/
+
+Тестовый вход:
+- Email: `ivanpetrov@example.ru`
+- Пароль: `EngLab123!`
+
 ## Запуск
 
 ```bash
