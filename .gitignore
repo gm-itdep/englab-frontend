@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Env
+.env
+.env.*
+!.env.example
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +27,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Caches / tooling
+.vite/
+coverage
+*.tsbuildinfo
+.eslintcache
+.oxlintcache
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
