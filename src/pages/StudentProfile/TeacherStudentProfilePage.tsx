@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { clearSession, getSession } from '../../shared/auth/mockAuth';
 import { t } from '../../shared/i18n';
@@ -20,7 +19,6 @@ import imgAvatarTeacher from '../../assets/images/teacher/avatar-teacher.png';
 import imgAvatarMobile from '../../assets/images/teacher/avatar-mobile.png';
 import imgStudent from '../../assets/images/teacher/student-ivan.png';
 import logoEnglab from '../../assets/images/logo-englab.svg';
-import { AskQuestionModal } from '../Lesson/AskQuestionModal';
 import styles from './TeacherStudentProfilePage.module.css';
 
 const th = t.teacherHome;
@@ -162,7 +160,7 @@ function ParamRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function StudentSummaryCard({ onAsk }: { onAsk: () => void }) {
+function StudentSummaryCard() {
   return (
     <section className={styles.summaryCard}>
       <div className={styles.summaryBody}>
@@ -191,14 +189,6 @@ function StudentSummaryCard({ onAsk }: { onAsk: () => void }) {
             </div>
           </div>
         </div>
-      </div>
-      <div className={styles.summaryActions}>
-        <button type="button" className={styles.secondaryBtn} onClick={onAsk}>
-          {tp.askQuestion}
-        </button>
-        <button type="button" className={styles.ghostBtn}>
-          {tp.complain}
-        </button>
       </div>
     </section>
   );
@@ -393,7 +383,6 @@ export function TeacherStudentProfilePage() {
   const session = getSession();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [questionOpen, setQuestionOpen] = useState(false);
   const isEmpty = searchParams.get('empty') === '1';
 
   if (!session) {
@@ -414,7 +403,7 @@ export function TeacherStudentProfilePage() {
           <div className={styles.content}>
             <div className={styles.primaryCol}>
               <div className={styles.summaryMobile}>
-                <StudentSummaryCard onAsk={() => setQuestionOpen(true)} />
+                <StudentSummaryCard />
               </div>
               <NotesCard empty={isEmpty} />
               <div className={styles.listsRow}>
@@ -423,13 +412,12 @@ export function TeacherStudentProfilePage() {
               </div>
             </div>
             <div className={styles.sideCol}>
-              <StudentSummaryCard onAsk={() => setQuestionOpen(true)} />
+              <StudentSummaryCard />
             </div>
           </div>
         </div>
       </div>
       <MobileBottomNav />
-      <AskQuestionModal open={questionOpen} onClose={() => setQuestionOpen(false)} />
     </main>
   );
 }

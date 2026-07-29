@@ -26,7 +26,6 @@ import imgAvatarMobile from '../../assets/images/teacher/avatar-mobile.png';
 import imgStudent from '../../assets/images/teacher/student-ivan.png';
 import logoEnglab from '../../assets/images/logo-englab.svg';
 import styles from './TeacherLessonPage.module.css';
-import { AskQuestionModal } from './AskQuestionModal';
 
 const th = t.teacherHome;
 const tl = t.teacherLesson;
@@ -198,7 +197,6 @@ export function TeacherLessonPage() {
   const [lessonStatus, setLessonStatus] = useState<'new' | 'ready' | 'completed'>(
     isEmptyLesson ? 'new' : 'ready',
   );
-  const [questionModalOpen, setQuestionModalOpen] = useState(false);
   const [uploadedMaterials, setUploadedMaterials] = useState<MaterialFile[]>([]);
   const [noteAbout, setNoteAbout] = useState(isEmptyLesson ? '' : tl.noteAboutText);
   const [noteNext, setNoteNext] = useState(isEmptyLesson ? '' : tl.noteNextText);
@@ -569,20 +567,6 @@ export function TeacherLessonPage() {
                     </p>
                   </div>
                 </div>
-                <div className={styles.studentActions}>
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    fullWidth
-                    className={styles.askBtn}
-                    onClick={() => setQuestionModalOpen(true)}
-                  >
-                    {tl.askQuestion}
-                  </Button>
-                  <button type="button" className={styles.complainBtn}>
-                    {tl.complain}
-                  </button>
-                </div>
               </section>
 
               <section className={`${styles.connectionCard} ${styles.orderConnection}`}>
@@ -598,7 +582,6 @@ export function TeacherLessonPage() {
         </div>
       </div>
       <MobileBottomNav />
-      <AskQuestionModal open={questionModalOpen} onClose={() => setQuestionModalOpen(false)} />
     </main>
   );
 }
