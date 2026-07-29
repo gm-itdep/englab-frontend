@@ -1,0 +1,23 @@
+.link {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  line-height: var(--line-height-body-s);
+  font-weight: 400;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.primary {
+  color: var(--color-primary-700);
+}
+
+.muted {
+  color: var(--color-gray-700);
+}

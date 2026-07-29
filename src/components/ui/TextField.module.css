@@ -1,0 +1,33 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  width: 100%;
+}
+
+.label {
+  font-size: var(--font-size-body-s);
+  line-height: var(--line-height-body-s);
+  color: #000000;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxs);
+  width: 100%;
+}
+
+.hint {
+  margin: 0;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-gray-700);
+}
+
+.error {
+  margin: 0;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-error-500);
+}

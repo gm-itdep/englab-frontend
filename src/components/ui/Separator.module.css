@@ -1,0 +1,24 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-md);
+  width: 100%;
+}
+
+.line {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 1px;
+  background-color: var(--color-gray-300);
+}
+
+.label {
+  flex-shrink: 0;
+  font-family: var(--font-family-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--color-gray-500);
+  text-align: center;
+}

@@ -1,0 +1,1 @@
+export { VerifyEmailSuccessPage } from './VerifyEmailSuccessPage';
