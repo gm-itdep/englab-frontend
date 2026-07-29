@@ -90,15 +90,7 @@ function IconImg({
   );
 }
 
-function Sidebar({
-  expanded,
-  onToggle,
-  onLogout,
-}: {
-  expanded: boolean;
-  onToggle: () => void;
-  onLogout: () => void;
-}) {
+function Sidebar({ onLogout }: { onLogout: () => void }) {
   const topItems = [
     { icon: iconHome, iconSize: 28, label: th.navHome, to: '/home', active: false },
     { icon: iconCalendar, iconSize: 22.4, label: th.navCalendar, to: '/schedule', active: false },
@@ -112,35 +104,17 @@ function Sidebar({
   ] as const;
 
   return (
-    <aside
-      className={[styles.sidebar, expanded ? styles.sidebarExpanded : ''].filter(Boolean).join(' ')}
-      aria-label="Навигация"
-    >
-      <button
-        type="button"
-        className={styles.logoMark}
-        onClick={onToggle}
-        aria-expanded={expanded}
-        aria-label={expanded ? th.navCollapse : th.navExpand}
-      >
-        {expanded ? (
-          <img src={logoEnglab} alt={t.common.brand} className={styles.logoFull} width={110} height={27} />
-        ) : (
-          <img src={iconLogoMark} alt={t.common.brand} className={styles.logoCompact} width={38} height={26} />
-        )}
-      </button>
+    <aside className={styles.sidebar} aria-label="Навигация">
+      <div className={styles.logoMark}>
+        <img src={logoEnglab} alt={t.common.brand} className={styles.logoFull} width={110} height={27} />
+        <img src={iconLogoMark} alt="" className={styles.logoCompact} width={38} height={26} />
+      </div>
       <div className={styles.sidebarMenu}>
         <nav className={styles.sidebarNav}>
           {topItems.map((item) => {
             const className = [styles.navBtn, item.active ? styles.navBtnActive : '']
               .filter(Boolean)
               .join(' ');
-            const content = (
-              <>
-                <IconImg src={item.icon} box={32} size={item.iconSize} />
-                {expanded ? <span className={styles.navLabel}>{item.label}</span> : null}
-              </>
-            );
             return (
               <Link
                 key={item.label}
@@ -149,7 +123,8 @@ function Sidebar({
                 aria-current={item.active ? 'page' : undefined}
                 aria-label={item.label}
               >
-                {content}
+                <IconImg src={item.icon} box={32} size={item.iconSize} />
+                <span className={styles.navLabel}>{item.label}</span>
               </Link>
             );
           })}
@@ -164,7 +139,7 @@ function Sidebar({
               onClick={item.onClick}
             >
               <IconImg src={item.icon} box={32} size={item.iconSize} />
-              {expanded ? <span className={styles.navLabel}>{item.label}</span> : null}
+              <span className={styles.navLabel}>{item.label}</span>
             </button>
           ))}
         </div>
@@ -655,7 +630,6 @@ export function TeacherStudentsPage() {
   const session = getSession();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const [filters, setFilters] = useState<FilterValues>(DEFAULT_FILTERS);
   const [openKey, setOpenKey] = useState<FilterKey | null>(null);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -717,14 +691,8 @@ export function TeacherStudentsPage() {
 
   return (
     <main className={styles.page}>
-      <div
-        className={[styles.shell, sidebarExpanded ? styles.shellExpanded : ''].filter(Boolean).join(' ')}
-      >
-        <Sidebar
-          expanded={sidebarExpanded}
-          onToggle={() => setSidebarExpanded((value) => !value)}
-          onLogout={handleLogout}
-        />
+      <div className={styles.shell}>
+        <Sidebar onLogout={handleLogout} />
         <div className={styles.main}>
           <Topbar />
 

@@ -71,15 +71,7 @@ function IconImg({
   );
 }
 
-function Sidebar({
-  expanded,
-  onToggle,
-  onLogout,
-}: {
-  expanded: boolean;
-  onToggle: () => void;
-  onLogout: () => void;
-}) {
+function Sidebar({ onLogout }: { onLogout: () => void }) {
   const topItems = [
     { icon: iconHome, iconSize: 28, label: th.navHome, to: '/home', active: false },
     { icon: iconCalendar, iconSize: 22.4, label: th.navCalendar, to: '/schedule', active: false },
@@ -93,23 +85,11 @@ function Sidebar({
   ] as const;
 
   return (
-    <aside
-      className={[styles.sidebar, expanded ? styles.sidebarExpanded : ''].filter(Boolean).join(' ')}
-      aria-label="Навигация"
-    >
-      <button
-        type="button"
-        className={styles.logoMark}
-        onClick={onToggle}
-        aria-expanded={expanded}
-        aria-label={expanded ? th.navCollapse : th.navExpand}
-      >
-        {expanded ? (
-          <img src={logoEnglab} alt={t.common.brand} className={styles.logoFull} width={110} height={27} />
-        ) : (
-          <img src={iconLogoMark} alt={t.common.brand} className={styles.logoCompact} width={38} height={26} />
-        )}
-      </button>
+    <aside className={styles.sidebar} aria-label="Навигация">
+      <div className={styles.logoMark}>
+        <img src={logoEnglab} alt={t.common.brand} className={styles.logoFull} width={110} height={27} />
+        <img src={iconLogoMark} alt="" className={styles.logoCompact} width={38} height={26} />
+      </div>
       <div className={styles.sidebarMenu}>
         <nav className={styles.sidebarNav}>
           {topItems.map((item) => {
@@ -125,7 +105,7 @@ function Sidebar({
                 aria-label={item.label}
               >
                 <IconImg src={item.icon} box={32} size={item.iconSize} />
-                {expanded ? <span className={styles.navLabel}>{item.label}</span> : null}
+                <span className={styles.navLabel}>{item.label}</span>
               </Link>
             );
           })}
@@ -140,7 +120,7 @@ function Sidebar({
               onClick={item.onClick}
             >
               <IconImg src={item.icon} box={32} size={item.iconSize} />
-              {expanded ? <span className={styles.navLabel}>{item.label}</span> : null}
+              <span className={styles.navLabel}>{item.label}</span>
             </button>
           ))}
         </div>
@@ -214,7 +194,6 @@ export function TeacherLessonPage() {
   const [searchParams] = useSearchParams();
   const fileInputId = useId();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const isEmptyLesson = searchParams.get('empty') === '1';
   const [lessonStatus, setLessonStatus] = useState<'new' | 'ready' | 'completed'>(
     isEmptyLesson ? 'new' : 'ready',
@@ -224,8 +203,15 @@ export function TeacherLessonPage() {
   const [noteAbout, setNoteAbout] = useState(isEmptyLesson ? '' : tl.noteAboutText);
   const [noteNext, setNoteNext] = useState(isEmptyLesson ? '' : tl.noteNextText);
   const noteAboutRef = useRef<HTMLTextAreaElement>(null);
+  const noteNextRef = useRef<HTMLTextAreaElement>(null);
   const uploadedMaterialsRef = useRef(uploadedMaterials);
   uploadedMaterialsRef.current = uploadedMaterials;
+
+  const resizeNoteInput = (el: HTMLTextAreaElement | null) => {
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${el.scrollHeight}px`;
+  };
 
   const demoMaterials = useMemo<MaterialFile[]>(
     () =>
@@ -250,6 +236,14 @@ export function TeacherLessonPage() {
       return [];
     });
   }, [searchParams]);
+
+  useEffect(() => {
+    resizeNoteInput(noteAboutRef.current);
+  }, [noteAbout]);
+
+  useEffect(() => {
+    resizeNoteInput(noteNextRef.current);
+  }, [noteNext]);
 
   useEffect(() => {
     return () => {
@@ -332,14 +326,8 @@ export function TeacherLessonPage() {
 
   return (
     <main className={styles.page}>
-      <div
-        className={[styles.shell, sidebarExpanded ? styles.shellExpanded : ''].filter(Boolean).join(' ')}
-      >
-        <Sidebar
-          expanded={sidebarExpanded}
-          onToggle={() => setSidebarExpanded((value) => !value)}
-          onLogout={handleLogout}
-        />
+      <div className={styles.shell}>
+        <Sidebar onLogout={handleLogout} />
         <div className={styles.main}>
           <Topbar />
 
@@ -534,17 +522,18 @@ export function TeacherLessonPage() {
                       value={noteAbout}
                       onChange={(event) => setNoteAbout(event.target.value)}
                       placeholder={tl.noteAboutPlaceholder}
-                      rows={4}
+                      rows={1}
                     />
                   </label>
                   <label className={styles.noteBlock}>
                     <span className={styles.noteLabel}>{tl.noteNextLabel}</span>
                     <textarea
+                      ref={noteNextRef}
                       className={styles.noteInput}
                       value={noteNext}
                       onChange={(event) => setNoteNext(event.target.value)}
                       placeholder={tl.noteNextPlaceholder}
-                      rows={4}
+                      rows={1}
                     />
                   </label>
                 </div>
