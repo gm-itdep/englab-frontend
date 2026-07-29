@@ -267,18 +267,20 @@
   border: none;
   outline: none;
   background: transparent;
+  padding-left: 28px;
+  box-sizing: border-box;
   font-family: var(--font-family-base);
   font-size: var(--font-size-body-s);
   font-weight: 300;
   line-height: var(--line-height-body-s);
   color: var(--color-gray-1000);
-  text-align: center;
+  text-align: left;
 }
 
 .search input::placeholder {
   color: var(--color-gray-800);
   font-weight: 300;
-  text-align: center;
+  text-align: left;
 }
 
 .searchDesktop {
@@ -1607,21 +1609,37 @@
   }
 
   .actionsCard {
-    height: 398px;
-    min-height: 398px;
+    height: auto;
+    min-height: 0;
     gap: 16px;
-    overflow: clip;
+    overflow: visible;
+    width: 100%;
+    max-width: 100%;
   }
 
   .actionList {
     gap: 12px;
+    min-width: 0;
+    width: 100%;
   }
 
   .actionRow {
     height: auto;
     min-height: 0;
+    min-width: 0;
+    max-width: 100%;
     padding: 8px 12px;
     align-items: center;
+  }
+
+  .actionText {
+    min-width: 0;
+  }
+
+  .actionTitle,
+  .actionMeta {
+    white-space: normal;
+    overflow-wrap: break-word;
   }
 
   .calendarCard {

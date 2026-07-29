@@ -169,7 +169,7 @@
 
 .attachBtn {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   margin: 0;
   padding: 0;
@@ -205,12 +205,11 @@
 }
 
 .attachIcon {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 20px;
   height: 20px;
-  padding: 5px;
   flex-shrink: 0;
   box-sizing: border-box;
 }
@@ -218,7 +217,10 @@
 .attachIcon img {
   width: 14px;
   height: 14px;
+  max-width: none;
+  object-fit: contain;
   display: block;
+  flex-shrink: 0;
 }
 
 .actions {

@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState, type ChangeEvent } from 'react';
 import { Button } from '../../components/ui';
 import { t } from '../../shared/i18n';
 import iconClose from '../../assets/icons/modal-close.svg';
-import iconLink from '../../assets/icons/teacher/link.svg';
+import iconAttachLink from '../../assets/icons/teacher/attach-link.svg';
 import styles from './AskQuestionModal.module.css';
 
 const tm = t.teacherLesson.questionModal;
@@ -125,7 +125,7 @@ export function AskQuestionModal({ open, onClose }: AskQuestionModalProps) {
               />
               <button type="button" className={styles.attachBtn} onClick={openFilePicker}>
                 <span className={styles.attachIcon}>
-                  <img src={iconLink} alt="" width={14} height={14} />
+                  <img src={iconAttachLink} alt="" width={14} height={14} />
                 </span>
                 <span className={styles.attachLabel}>
                   {attachedFile ? attachedFile.name : tm.attachFile}
