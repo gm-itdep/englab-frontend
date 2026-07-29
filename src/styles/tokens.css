@@ -1,6 +1,7 @@
 :root {
   /* Colors — Gray */
   --color-gray-0: #ffffff;
+  --color-gray-100: #f5f5f5;
   --color-gray-200: #ebebeb;
   --color-gray-300: #e0e0e0;
   --color-gray-500: #cccccc;
@@ -15,11 +16,24 @@
   --color-primary-100: #f4fcd1;
   --color-primary-500: #c7f21a;
   --color-primary-700: #809a18;
+  --color-primary-800: #5c6d17;
   --color-primary-1000: #272b16;
+
+  /* Colors — Secondary */
+  --color-secondary-500: #2f8f5b;
+
+  /* Colors — Info */
+  --color-info-50: #eceff8;
+  --color-info-100: #d9e0f0;
+  --color-info-500: #3f63b5;
 
   /* Colors — Error */
   --color-error-50: #faebeb;
   --color-error-500: #c93a3a;
+
+  /* Colors — Warning */
+  --color-warning-50: #fcf4e6;
+  --color-warning-500: #e19500;
 
   /* Background */
   --color-bg-page: #f5f5f5;

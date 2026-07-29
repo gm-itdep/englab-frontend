@@ -1,0 +1,976 @@
+.page {
+  min-height: 100%;
+  background-color: var(--color-gray-100);
+  box-sizing: border-box;
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.shellExpanded {
+  grid-template-columns: 200px minmax(0, 1fr);
+  max-width: 1544px;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+}
+
+.iconBox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: clip;
+}
+
+.iconBox img {
+  object-fit: contain;
+  display: block;
+  max-width: none;
+}
+
+/* Sidebar — width comes from .shell grid columns so content shifts */
+.sidebar {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 800px;
+  max-height: calc(100vh - 64px);
+  background: var(--color-gray-0);
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(131, 131, 131, 0.24);
+  position: sticky;
+  top: 32px;
+  align-self: start;
+  overflow: clip;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.sidebarExpanded {
+  width: 100%;
+}
+
+.sidebarMenu {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 0;
+  width: 100%;
+}
+
+.sidebarNav,
+.sidebarBottom {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+
+.sidebarBottom {
+  padding-bottom: 24px;
+}
+
+.logoMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 120px;
+  padding: 24px 32px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.logoCompact {
+  width: 37.787px;
+  height: 25.532px;
+  object-fit: contain;
+  display: block;
+}
+
+.logoFull {
+  width: 109.769px;
+  height: 27.377px;
+  object-fit: contain;
+  display: block;
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 24px;
+  border: none;
+  border-left: 2px solid transparent;
+  background: var(--color-gray-0);
+  box-sizing: border-box;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  font: inherit;
+}
+
+.navBtnActive {
+  background: var(--color-primary-100);
+  border-left-color: var(--color-primary-500);
+}
+
+.navBtnActive .iconBox img {
+  filter: brightness(0) saturate(100%) invert(88%) sepia(47%) saturate(699%) hue-rotate(27deg)
+    brightness(103%) contrast(97%);
+}
+
+.navLabel {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-1000);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.sidebarExpanded .navBtn {
+  justify-content: flex-start;
+}
+
+/* Topbar */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+
+.topbarTitles {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--gap-xxs);
+  padding-right: var(--gap-md);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--color-gray-1000);
+}
+
+.subtitle {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: var(--line-height-caption);
+  color: var(--color-gray-700);
+}
+
+.topbarActions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  flex-shrink: 0;
+}
+
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: var(--color-gray-0);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.userChip {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  flex-shrink: 0;
+  padding: var(--gap-xs) var(--gap-sm);
+  background: var(--color-gray-0);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.userChipProfile {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.userAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  object-fit: cover;
+  display: block;
+}
+
+.userName {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-900);
+  white-space: nowrap;
+}
+
+.userChevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.userChevron img {
+  width: 9px;
+  height: 5px;
+  display: block;
+}
+
+/* Content — Figma 58:15146: gaps 16px between all blocks */
+.content {
+  display: flex;
+  gap: var(--gap-md);
+  align-items: flex-start;
+  width: 100%;
+}
+
+.primaryCol {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+}
+
+.sideCol {
+  width: 323px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  align-self: stretch;
+}
+
+.summaryMobile {
+  display: none;
+}
+
+.listsRow {
+  display: flex;
+  gap: var(--gap-md);
+  align-items: flex-start;
+  width: 100%;
+}
+
+.cardTitle {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-l);
+  font-weight: 500;
+  line-height: var(--line-height-body-l);
+  color: var(--color-gray-1000);
+}
+
+/* Buttons */
+.secondaryBtn,
+.secondaryBtnWide {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 12px 16px;
+  border: 1px solid var(--color-gray-800);
+  border-radius: var(--radius-sm);
+  background: var(--color-gray-0);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-button);
+  font-weight: 500;
+  line-height: var(--line-height-button);
+  color: var(--color-primary-1000);
+  cursor: pointer;
+  box-sizing: border-box;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.secondaryBtnWide {
+  width: 100%;
+}
+
+.secondaryBtnMuted {
+  border-color: var(--color-gray-500);
+  color: var(--color-gray-1000);
+}
+
+.ghostBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 44px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-gray-0);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-button);
+  font-weight: 500;
+  line-height: var(--line-height-button);
+  color: var(--color-primary-1000);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* Notes — Figma card / note teacher: padding 24, gap 24 */
+.notesCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+  width: 100%;
+  padding: var(--gap-lg);
+  background: var(--color-gray-0);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  box-sizing: border-box;
+}
+
+.notesHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-lg);
+  width: 100%;
+}
+
+.notesTitles {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.notesSubtitle {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-700);
+}
+
+.notesBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-sm);
+  box-sizing: border-box;
+}
+
+.notesLabel {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-700);
+}
+
+.notesText {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-1000);
+  white-space: pre-wrap;
+}
+
+.notesEditMobile {
+  display: none;
+  width: 100%;
+}
+
+.notesCardEmpty {
+  align-items: center;
+  justify-content: center;
+  min-height: 366px;
+}
+
+.notesCardEmpty .notesTitles {
+  width: 100%;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.notesAddBtn {
+  flex-shrink: 0;
+}
+
+.emptyBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-md);
+  width: 100%;
+}
+
+.emptyIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: clip;
+}
+
+.emptyIcon img {
+  display: block;
+  object-fit: contain;
+}
+
+.emptyText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-xs);
+  width: 100%;
+  text-align: center;
+}
+
+.emptyTitle {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 500;
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-1000);
+  width: 100%;
+}
+
+.emptyDesc {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-800);
+  white-space: pre-wrap;
+  width: 100%;
+}
+
+/* List cards — Figma 58:15122: lessons 490, homework 446 */
+.listCard {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+  padding: var(--gap-lg);
+  background: var(--color-gray-0);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  box-sizing: border-box;
+}
+
+.listCardLessons {
+  height: 490px;
+  justify-content: space-between;
+}
+
+.listCardHomework {
+  height: 446px;
+}
+
+.listCardEmpty {
+  height: auto;
+  min-height: 470px;
+  justify-content: space-between;
+  gap: 0;
+}
+
+.homeworkEmpty {
+  gap: var(--gap-lg);
+  justify-content: flex-start;
+}
+
+.homeworkEmptyBody {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 376px;
+}
+
+.listStack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.lessonItem,
+.homeworkItem {
+  display: flex;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-sm);
+  box-sizing: border-box;
+}
+
+.lessonItem {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.homeworkItem {
+  align-items: center;
+  gap: 8px;
+}
+
+.lessonTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.lessonTime {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-1000);
+}
+
+.lessonBody {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+}
+
+.lessonAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+  background: var(--color-gray-200);
+}
+
+.lessonText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.lessonTeacher {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-1000);
+}
+
+.lessonTopic {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-700);
+}
+
+.homeworkText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.homeworkDate {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-700);
+}
+
+.homeworkName {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-1000);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: var(--radius-xs);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-caption);
+  font-weight: 300;
+  line-height: var(--line-height-caption);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.badgeSoon,
+.badgeDone {
+  background: var(--color-primary-100);
+  color: var(--color-primary-700);
+}
+
+.badgeConfirmed {
+  background: var(--color-info-50);
+  color: var(--color-info-500);
+}
+
+.badgeCancelled,
+.badgeNotSent {
+  background: var(--color-error-50);
+  color: var(--color-error-500);
+}
+
+.badgeReview {
+  background: var(--color-warning-50);
+  color: var(--color-warning-500);
+}
+
+/* Summary card — Figma 58:15153: padding/card 24, gap 24 */
+.summaryCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+  width: 100%;
+  padding: var(--gap-lg);
+  background: var(--color-gray-0);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  box-sizing: border-box;
+}
+
+.summaryBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  width: 100%;
+}
+
+.summaryPhoto {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+.summaryInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+  width: 100%;
+}
+
+.summaryName {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-l);
+  font-weight: 500;
+  line-height: var(--line-height-body-l);
+  color: var(--color-gray-1000);
+}
+
+.summaryParams {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  width: 100%;
+}
+
+.paramRow {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+}
+
+.paramLabel {
+  color: var(--color-gray-700);
+  white-space: nowrap;
+}
+
+.paramValue {
+  color: var(--color-gray-1000);
+}
+
+.summaryStats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  width: 100%;
+  padding-top: var(--gap-md);
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.statItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-xs);
+  width: 100%;
+}
+
+.statText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xxs);
+  min-width: 0;
+}
+
+.statLabel {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-700);
+}
+
+.statValue {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-900);
+}
+
+.summaryActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  width: 100%;
+}
+
+.summaryActions .secondaryBtn {
+  width: 100%;
+}
+
+.mobileAvatarBtn,
+.bottomNav {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .sideCol {
+    display: none;
+  }
+
+  .summaryMobile {
+    display: block;
+  }
+
+  .listsRow {
+    flex-direction: column;
+  }
+
+  .listCardLessons,
+  .listCardHomework {
+    height: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .shell,
+  .shellExpanded {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    grid-template-columns: none;
+    width: 100%;
+    max-width: none;
+    padding: 16px;
+    padding-bottom: 92px;
+    gap: 16px;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .main {
+    width: 100%;
+    gap: 16px;
+  }
+
+  .title {
+    font-size: var(--font-size-h2);
+    line-height: var(--line-height-h2);
+  }
+
+  .userChip {
+    display: none;
+  }
+
+  .mobileAvatarBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    background: var(--color-gray-0);
+    cursor: pointer;
+  }
+
+  .mobileAvatarBtn img {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    object-fit: cover;
+  }
+
+  .iconButton {
+    width: 48px;
+    height: 48px;
+  }
+
+  .notesCard,
+  .listCard,
+  .summaryCard {
+    padding: var(--gap-md);
+    gap: var(--gap-md);
+  }
+
+  .listCardLessons,
+  .listCardHomework {
+    height: auto;
+  }
+
+  .notesCardEmpty,
+  .listCardEmpty {
+    min-height: 0;
+  }
+
+  .notesEditDesktop {
+    display: none;
+  }
+
+  .notesEditMobile {
+    display: inline-flex;
+  }
+
+  .notesAddBtn {
+    width: 100%;
+  }
+
+  .emptyBlock {
+    gap: 12px;
+  }
+
+  .homeworkEmptyBody {
+    min-height: 120px;
+  }
+
+  .summaryPhoto {
+    height: 288px;
+  }
+
+  .bottomNav {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    height: 76px;
+    background: var(--color-gray-0);
+    border-top: 1px solid var(--color-gray-300);
+    border-left: 1px solid var(--color-gray-300);
+    border-right: 1px solid var(--color-gray-300);
+    border-radius: 16px 16px 0 0;
+    padding: 0 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .bottomNavItem {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 12px 4px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: var(--font-family-base);
+    font-size: 10px;
+    line-height: 16px;
+    color: var(--color-gray-800);
+    box-sizing: border-box;
+  }
+
+  .bottomNavSlot {
+    color: var(--color-primary-700);
+  }
+}

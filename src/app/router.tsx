@@ -49,6 +49,24 @@ const HomePage = lazy(() =>
   import('../pages/Home').then((module) => ({ default: module.HomePage })),
 );
 
+const TeacherSchedulePage = lazy(() =>
+  import('../pages/Schedule').then((module) => ({ default: module.TeacherSchedulePage })),
+);
+
+const TeacherLessonPage = lazy(() =>
+  import('../pages/Lesson').then((module) => ({ default: module.TeacherLessonPage })),
+);
+
+const TeacherStudentsPage = lazy(() =>
+  import('../pages/Students').then((module) => ({ default: module.TeacherStudentsPage })),
+);
+
+const TeacherStudentProfilePage = lazy(() =>
+  import('../pages/StudentProfile').then((module) => ({
+    default: module.TeacherStudentProfilePage,
+  })),
+);
+
 function RouteFallback() {
   return (
     <div
@@ -79,6 +97,10 @@ export function AppRouter() {
           <Route path="/verify-email" element={<VerifyEmailPage />} />
           <Route path="/verify-email/success" element={<VerifyEmailSuccessPage />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/schedule" element={<TeacherSchedulePage />} />
+          <Route path="/lesson" element={<TeacherLessonPage />} />
+          <Route path="/students" element={<TeacherStudentsPage />} />
+          <Route path="/student" element={<TeacherStudentProfilePage />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
