@@ -67,6 +67,18 @@ const TeacherStudentProfilePage = lazy(() =>
   })),
 );
 
+const AdminUsersPage = lazy(() =>
+  import('../pages/Users').then((module) => ({ default: module.AdminUsersPage })),
+);
+
+const AdminFinancePage = lazy(() =>
+  import('../pages/Finance').then((module) => ({ default: module.AdminFinancePage })),
+);
+
+const AdminLessonsPage = lazy(() =>
+  import('../pages/Lessons').then((module) => ({ default: module.AdminLessonsPage })),
+);
+
 function RouteFallback() {
   return (
     <div
@@ -96,12 +108,15 @@ export function AppRouter() {
           <Route path="/register/success" element={<RegisterSuccessPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
           <Route path="/verify-email/success" element={<VerifyEmailSuccessPage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/users" element={<AdminUsersPage />} />
+          <Route path="/finance" element={<AdminFinancePage />} />
+          <Route path="/lessons" element={<AdminLessonsPage />} />
           <Route path="/schedule" element={<TeacherSchedulePage />} />
           <Route path="/lesson" element={<TeacherLessonPage />} />
           <Route path="/students" element={<TeacherStudentsPage />} />
           <Route path="/student" element={<TeacherStudentProfilePage />} />
-          <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Suspense>
