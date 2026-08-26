@@ -253,20 +253,32 @@ function AccountFormModal({
   mode: 'create' | 'edit';
   user?: AdminUser;
   onClose: () => void;
-  onSubmit: (payload: { firstName: string; lastName: string; email: string; role: UserRole }) => void;
+  onSubmit: (payload: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: UserRole;
+    password?: string;
+  }) => void;
 }) {
   const titleId = useId();
   const firstNameId = useId();
   const lastNameId = useId();
   const emailId = useId();
+  const passwordId = useId();
+  const passwordConfirmId = useId();
   const roleId = useId();
   const initialNames = splitUserName(user?.name ?? '');
   const [firstName, setFirstName] = useState(initialNames.firstName);
   const [lastName, setLastName] = useState(initialNames.lastName);
   const [email, setEmail] = useState(user?.email ?? '');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [role, setRole] = useState<UserRole>(user?.role ?? 'teacher');
   const [firstNameError, setFirstNameError] = useState('');
   const [lastNameError, setLastNameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [passwordConfirmError, setPasswordConfirmError] = useState('');
   const isCreate = mode === 'create';
   const requiredMessage = 'Поле обязательно';
 
@@ -288,15 +300,29 @@ function AccountFormModal({
     const trimmedLast = lastName.trim();
     const nextFirstError = trimmedFirst ? '' : requiredMessage;
     const nextLastError = trimmedLast ? '' : requiredMessage;
+    let nextPasswordError = '';
+    let nextPasswordConfirmError = '';
+
+    if (isCreate) {
+      if (!password) nextPasswordError = requiredMessage;
+      if (!passwordConfirm) nextPasswordConfirmError = requiredMessage;
+      else if (password && passwordConfirm !== password) {
+        nextPasswordConfirmError = 'Пароли не совпадают';
+      }
+    }
+
     setFirstNameError(nextFirstError);
     setLastNameError(nextLastError);
-    if (nextFirstError || nextLastError) return;
+    setPasswordError(nextPasswordError);
+    setPasswordConfirmError(nextPasswordConfirmError);
+    if (nextFirstError || nextLastError || nextPasswordError || nextPasswordConfirmError) return;
 
     onSubmit({
       firstName: trimmedFirst,
       lastName: trimmedLast,
       email: email.trim() || (isCreate ? 'example@example.ru' : (user?.email ?? '')),
       role,
+      ...(isCreate ? { password } : {}),
     });
   };
 
@@ -357,6 +383,39 @@ function AccountFormModal({
               onChange={(event) => setEmail(event.target.value)}
               autoComplete="email"
             />
+            {isCreate ? (
+              <>
+                <TextField
+                  id={passwordId}
+                  label="Пароль"
+                  type="password"
+                  placeholder="Введите пароль"
+                  value={password}
+                  errorMessage={passwordError || undefined}
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                    if (passwordError) setPasswordError('');
+                    if (passwordConfirmError && event.target.value === passwordConfirm) {
+                      setPasswordConfirmError('');
+                    }
+                  }}
+                  autoComplete="new-password"
+                />
+                <TextField
+                  id={passwordConfirmId}
+                  label="Повтор пароля"
+                  type="password"
+                  placeholder="Повторите пароль"
+                  value={passwordConfirm}
+                  errorMessage={passwordConfirmError || undefined}
+                  onChange={(event) => {
+                    setPasswordConfirm(event.target.value);
+                    if (passwordConfirmError) setPasswordConfirmError('');
+                  }}
+                  autoComplete="new-password"
+                />
+              </>
+            ) : null}
             <div className={styles.editRoleField}>
               <label className={styles.editRoleLabel} htmlFor={roleId}>
                 Роль
@@ -694,6 +753,7 @@ export function AdminUsersPage() {
     lastName: string;
     email: string;
     role: UserRole;
+    password?: string;
   }) => {
     const date = '15 февраля 2026';
     const name = [payload.firstName, payload.lastName].filter(Boolean).join(' ');
@@ -710,7 +770,12 @@ export function AdminUsersPage() {
       ...prev,
     ]);
     setCreateOpen(false);
-    setCreatedAccount(payload);
+    setCreatedAccount({
+      firstName: payload.firstName,
+      lastName: payload.lastName,
+      email: payload.email,
+      role: payload.role,
+    });
   };
 
   const hasActiveFilters = search.trim().length > 0 || roleFilter !== ROLE_FILTER_ALL;
