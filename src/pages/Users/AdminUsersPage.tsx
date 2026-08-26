@@ -303,12 +303,10 @@ function AccountFormModal({
     let nextPasswordError = '';
     let nextPasswordConfirmError = '';
 
-    if (isCreate) {
-      if (!password) nextPasswordError = requiredMessage;
-      if (!passwordConfirm) nextPasswordConfirmError = requiredMessage;
-      else if (password && passwordConfirm !== password) {
-        nextPasswordConfirmError = 'Пароли не совпадают';
-      }
+    if (!password) nextPasswordError = requiredMessage;
+    if (!passwordConfirm) nextPasswordConfirmError = requiredMessage;
+    else if (password && passwordConfirm !== password) {
+      nextPasswordConfirmError = 'Пароли не совпадают';
     }
 
     setFirstNameError(nextFirstError);
@@ -322,7 +320,7 @@ function AccountFormModal({
       lastName: trimmedLast,
       email: email.trim() || (isCreate ? 'example@example.ru' : (user?.email ?? '')),
       role,
-      ...(isCreate ? { password } : {}),
+      password,
     });
   };
 
@@ -383,39 +381,35 @@ function AccountFormModal({
               onChange={(event) => setEmail(event.target.value)}
               autoComplete="email"
             />
-            {isCreate ? (
-              <>
-                <TextField
-                  id={passwordId}
-                  label="Пароль"
-                  type="password"
-                  placeholder="Введите пароль"
-                  value={password}
-                  errorMessage={passwordError || undefined}
-                  onChange={(event) => {
-                    setPassword(event.target.value);
-                    if (passwordError) setPasswordError('');
-                    if (passwordConfirmError && event.target.value === passwordConfirm) {
-                      setPasswordConfirmError('');
-                    }
-                  }}
-                  autoComplete="new-password"
-                />
-                <TextField
-                  id={passwordConfirmId}
-                  label="Повтор пароля"
-                  type="password"
-                  placeholder="Повторите пароль"
-                  value={passwordConfirm}
-                  errorMessage={passwordConfirmError || undefined}
-                  onChange={(event) => {
-                    setPasswordConfirm(event.target.value);
-                    if (passwordConfirmError) setPasswordConfirmError('');
-                  }}
-                  autoComplete="new-password"
-                />
-              </>
-            ) : null}
+            <TextField
+              id={passwordId}
+              label="Пароль"
+              type="password"
+              placeholder="Введите пароль"
+              value={password}
+              errorMessage={passwordError || undefined}
+              onChange={(event) => {
+                setPassword(event.target.value);
+                if (passwordError) setPasswordError('');
+                if (passwordConfirmError && event.target.value === passwordConfirm) {
+                  setPasswordConfirmError('');
+                }
+              }}
+              autoComplete="new-password"
+            />
+            <TextField
+              id={passwordConfirmId}
+              label="Повтор пароля"
+              type="password"
+              placeholder="Повторите пароль"
+              value={passwordConfirm}
+              errorMessage={passwordConfirmError || undefined}
+              onChange={(event) => {
+                setPasswordConfirm(event.target.value);
+                if (passwordConfirmError) setPasswordConfirmError('');
+              }}
+              autoComplete="new-password"
+            />
             <div className={styles.editRoleField}>
               <label className={styles.editRoleLabel} htmlFor={roleId}>
                 Роль
@@ -735,6 +729,7 @@ export function AdminUsersPage() {
     lastName: string;
     email: string;
     role: UserRole;
+    password?: string;
   }) => {
     if (!editingUser) return;
     const name = [payload.firstName, payload.lastName].filter(Boolean).join(' ');
