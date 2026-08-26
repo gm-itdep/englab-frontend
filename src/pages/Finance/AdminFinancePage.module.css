@@ -283,6 +283,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+}
+
+.chevronWrap img {
+  display: block;
+  width: 9px;
+  height: 5px;
+  object-fit: contain;
 }
 
 .mobileAvatarButton,

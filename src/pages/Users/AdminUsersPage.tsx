@@ -827,7 +827,7 @@ export function AdminUsersPage() {
                   <span className={styles.userName}>{ADMIN_NAME}</span>
                 </span>
                 <span className={styles.chevronWrap}>
-                  <img src={ICON_CHEVRON} alt="" width={8.994} height={5.209} />
+                  <img src={ICON_CHEVRON} alt="" width={9} height={5} />
                 </span>
               </button>
               <button type="button" className={styles.mobileAvatarButton} aria-label={ADMIN_NAME}>
