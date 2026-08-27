@@ -340,12 +340,12 @@ function AccountFormModal({
       >
         <div className={styles.editModalBody}>
           <div className={styles.editModalHeader}>
-            <h2 id={titleId} className={styles.editModalTitle}>
-              {isCreate ? 'Создать аккаунт' : 'Редактировать аккаунт'}
-            </h2>
             <button type="button" className={styles.editModalClose} aria-label="Закрыть" onClick={onClose}>
               <img src={ICON_MODAL_CLOSE} alt="" width={16.8} height={16.8} />
             </button>
+            <h2 id={titleId} className={styles.editModalTitle}>
+              {isCreate ? 'Создать аккаунт' : 'Редактировать аккаунт'}
+            </h2>
           </div>
           <div className={styles.editModalFields}>
             <TextField

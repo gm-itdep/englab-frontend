@@ -1404,7 +1404,7 @@
     flex-direction: column;
     gap: 12px;
     width: 100%;
-    flex: 1 0 100%;
+    flex: 0 0 auto;
   }
 
   .mobileFilters .filterField {
