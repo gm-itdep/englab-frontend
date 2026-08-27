@@ -483,7 +483,7 @@ function AccountCreatedModal({
               <img src={ICON_CHECK_MARK} alt="" width={44.8} height={44.8} />
             </div>
             <button type="button" className={styles.createdClose} aria-label="Закрыть" onClick={onClose}>
-              <img src={ICON_MODAL_CLOSE} alt="" width={22.4} height={22.4} />
+              <img src={ICON_MODAL_CLOSE} alt="" width={16.8} height={16.8} />
             </button>
           </div>
           <div className={styles.createdText}>
@@ -673,6 +673,7 @@ export function AdminUsersPage() {
     previewEmpty ? 'Студенты' : ROLE_FILTER_ALL,
   );
   const [page, setPage] = useState(1);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [users, setUsers] = useState(() => getAdminUsers());
   const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
@@ -863,13 +864,29 @@ export function AdminUsersPage() {
               <div className={styles.toolbarDesktopExtras}>
                 <RoleSelect value={roleFilter} onChange={setRoleFilter} />
               </div>
-              <button type="button" className={styles.filterButton} aria-label="Фильтры">
+              <button
+                type="button"
+                className={[styles.filterButton, filtersOpen ? styles.filterButtonActive : '']
+                  .filter(Boolean)
+                  .join(' ')}
+                aria-label="Фильтры"
+                aria-expanded={filtersOpen}
+                onClick={() => setFiltersOpen((prev) => !prev)}
+              >
                 <img src={ICON_FILTER} alt="" width={24} height={23} />
               </button>
             </div>
             <button type="button" className={styles.createButton} onClick={() => setCreateOpen(true)}>
               Создать аккаунт
             </button>
+            {filtersOpen ? (
+              <div className={styles.mobileFilters}>
+                <div className={styles.mobileFilterField}>
+                  <span className={styles.mobileFilterLabel}>Роль</span>
+                  <RoleSelect value={roleFilter} onChange={setRoleFilter} />
+                </div>
+              </div>
+            ) : null}
           </section>
 
           {hasActiveFilters ? (

@@ -423,6 +423,15 @@
   flex-shrink: 0;
 }
 
+.filterButtonActive {
+  background: var(--color-primary-100);
+  border-color: var(--color-primary-500);
+}
+
+.mobileFilters {
+  display: none;
+}
+
 .selectWrap {
   position: relative;
   display: block;
@@ -1197,8 +1206,10 @@
 
   .toolbar {
     flex-wrap: wrap;
-    align-items: stretch;
+    align-items: flex-start;
+    justify-content: flex-start;
     min-height: 0;
+    height: auto;
     padding: 16px;
     gap: 12px;
     border-color: var(--color-gray-300);
@@ -1207,6 +1218,7 @@
   .toolbarLeft {
     width: 100%;
     gap: 8px;
+    flex: 0 0 auto;
   }
 
   .searchField {
@@ -1232,12 +1244,36 @@
     display: flex;
   }
 
-  .createButton {
+  .mobileFilters {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    flex: 0 0 100%;
+  }
+
+  .mobileFilterField {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     width: 100%;
   }
 
-  .tableCard {
-    display: none;
+  .mobileFilterLabel {
+    font-family: var(--font-family-base);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    color: var(--color-gray-1000);
+  }
+
+  .mobileFilters .selectWrap {
+    width: 100%;
+  }
+
+  .createButton {
+    width: 100%;
+    flex: 0 0 auto;
   }
 
   .mobileList {
@@ -1258,7 +1294,8 @@
     max-width: none;
     width: 100%;
     max-height: calc(100vh - 32px);
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .editModalHeader {
@@ -1300,13 +1337,14 @@
 .editModal {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 32px;
+  align-items: stretch;
+  gap: 24px;
   width: 100%;
   max-width: 420px;
   max-height: calc(100vh - 32px);
   padding: var(--gap-lg) 24px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: var(--color-gray-0);
   border: 1px solid var(--color-gray-300);
   border-radius: var(--radius-md);
@@ -1318,8 +1356,7 @@
   flex-direction: column;
   gap: var(--gap-md);
   width: 100%;
-  min-height: 0;
-  overflow-y: auto;
+  flex: 0 0 auto;
 }
 
 .editModalHeader {
@@ -1395,6 +1432,7 @@
   display: flex;
   gap: var(--gap-md);
   width: 100%;
+  flex: 0 0 auto;
 }
 
 .editCancelButton,
@@ -1481,9 +1519,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 8px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -1492,8 +1530,9 @@
 
 .createdClose img {
   display: block;
-  width: 22.4px;
-  height: 22.4px;
+  width: 16.8px;
+  height: 16.8px;
+  object-fit: contain;
 }
 
 .createdText {

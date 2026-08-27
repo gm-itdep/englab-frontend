@@ -22,7 +22,7 @@ import MOBILE_ICON_FINANCE from '../../assets/icons/admin/47ab14b6-6f95-4839-8c2
 import ICON_FILTER from '../../assets/icons/admin/users/filter.svg';
 import ICON_ARROW_LITE from '../../assets/icons/admin/users/arrow-lite.svg';
 import ICON_PAGE_DOTS from '../../assets/icons/admin/users/arrow-page.svg';
-import ICON_MODAL_CLOSE from '../../assets/icons/admin/users/close.svg';
+import ICON_MODAL_CLOSE from '../../assets/icons/modal-close.svg';
 import ICON_CHECK_MARK from '../../assets/icons/admin/users/check-mark.svg';
 import ROW_AVATAR from '../../assets/images/admin/users/row-avatar.png';
 import { TextField } from '../../components/ui';
@@ -677,7 +677,7 @@ function AccrueCreditsSuccessModal({
               <img src={ICON_CHECK_MARK} alt="" width={44.8} height={44.8} />
             </div>
             <button type="button" className={styles.createdClose} aria-label="Закрыть" onClick={onClose}>
-              <img src={ICON_MODAL_CLOSE} alt="" width={22.4} height={22.4} />
+              <img src={ICON_MODAL_CLOSE} alt="" width={16.8} height={16.8} />
             </button>
           </div>
           <div className={styles.createdText}>
