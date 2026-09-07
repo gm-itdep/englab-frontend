@@ -1,1 +1,0 @@
-var e=`/englab-frontend/assets/student-ivan-CNIUO1jY.png`;export{e as t};
