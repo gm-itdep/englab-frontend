@@ -4,6 +4,7 @@ import { getSession } from '../../shared/auth/mockAuth';
 import { OnboardingModal, type OnboardingAnswers } from './OnboardingModal';
 import { TeacherDashboard } from './TeacherDashboard';
 import { AdminDashboard } from './AdminDashboard';
+import { StudentDashboard } from './StudentDashboard';
 import styles from './HomePage.module.css';
 
 export function HomePage() {
@@ -13,7 +14,7 @@ export function HomePage() {
 
   const isPreviewState =
     searchParams.get('loading') === '1' || searchParams.get('empty') === '1';
-  const isAdmin = session?.role === 'admin' || (!session && isPreviewState);
+  const role = session?.role ?? (isPreviewState ? 'admin' : null);
 
   if (!session && !isPreviewState) {
     return <Navigate to="/login" replace />;
@@ -27,10 +28,19 @@ export function HomePage() {
     setIsOnboardingOpen(false);
   };
 
+  const dashboard =
+    role === 'admin' ? (
+      <AdminDashboard />
+    ) : role === 'student' ? (
+      <StudentDashboard />
+    ) : (
+      <TeacherDashboard />
+    );
+
   return (
     <main className={styles.page}>
-      {isAdmin ? <AdminDashboard /> : <TeacherDashboard />}
-      {!isAdmin && isOnboardingOpen ? (
+      {dashboard}
+      {role === 'teacher' && isOnboardingOpen ? (
         <OnboardingModal onClose={handleCloseOnboarding} onComplete={handleCompleteOnboarding} />
       ) : null}
     </main>

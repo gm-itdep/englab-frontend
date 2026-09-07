@@ -12,9 +12,16 @@ export const MOCK_ADMIN_USER = {
   role: 'admin',
 } as const;
 
+export const MOCK_STUDENT_USER = {
+  email: 'student@example.ru',
+  password: 'EngLab123!',
+  name: 'Иван Васильев',
+  role: 'student',
+} as const;
+
 const MOCK_DELAY_MS = 1500;
 
-export type UserRole = 'teacher' | 'admin';
+export type UserRole = 'teacher' | 'admin' | 'student';
 
 export type AuthUser = {
   email: string;
@@ -30,6 +37,11 @@ function delay(ms = MOCK_DELAY_MS): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function resolveRole(role: unknown): UserRole {
+  if (role === 'admin' || role === 'student' || role === 'teacher') return role;
+  return 'teacher';
+}
+
 export async function mockLogin(email: string, password: string): Promise<AuthResult> {
   await delay();
 
@@ -40,26 +52,19 @@ export async function mockLogin(email: string, password: string): Promise<AuthRe
     return { ok: false, reason: 'empty_fields' };
   }
 
-  const isTeacherValid =
-    normalizedEmail === MOCK_USER.email.toLowerCase() && normalizedPassword === MOCK_USER.password;
+  const accounts = [MOCK_ADMIN_USER, MOCK_STUDENT_USER, MOCK_USER] as const;
+  const matched = accounts.find(
+    (account) =>
+      normalizedEmail === account.email.toLowerCase() && normalizedPassword === account.password,
+  );
 
-  const isAdminValid =
-    normalizedEmail === MOCK_ADMIN_USER.email.toLowerCase() && normalizedPassword === MOCK_ADMIN_USER.password;
-
-  if (!isTeacherValid && !isAdminValid) {
+  if (!matched) {
     return { ok: false, reason: 'invalid_credentials' };
-  }
-
-  if (isAdminValid) {
-    return {
-      ok: true,
-      user: { email: MOCK_ADMIN_USER.email, name: MOCK_ADMIN_USER.name, role: MOCK_ADMIN_USER.role },
-    };
   }
 
   return {
     ok: true,
-    user: { email: MOCK_USER.email, name: MOCK_USER.name, role: MOCK_USER.role },
+    user: { email: matched.email, name: matched.name, role: matched.role },
   };
 }
 
@@ -123,7 +128,7 @@ export function getSession(): AuthUser | null {
     return {
       email: parsed.email,
       name: typeof parsed.name === 'string' ? parsed.name : '',
-      role: parsed.role === 'admin' ? 'admin' : 'teacher',
+      role: resolveRole(parsed.role),
     };
   } catch {
     return null;

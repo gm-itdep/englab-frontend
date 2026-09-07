@@ -14,12 +14,15 @@
   /* Colors — Primary */
   --color-primary-50: #f9fee8;
   --color-primary-100: #f4fcd1;
+  --color-primary-200: #e9faa3;
   --color-primary-500: #c7f21a;
+  --color-primary-600: #a3c619;
   --color-primary-700: #809a18;
   --color-primary-800: #5c6d17;
   --color-primary-1000: #272b16;
 
   /* Colors — Secondary */
+  --color-secondary-50: #eaf4ef;
   --color-secondary-500: #2f8f5b;
 
   /* Colors — Info */
