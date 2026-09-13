@@ -1,0 +1,1 @@
+var e=`/englab-frontend/assets/petr-D5FhqZMa.png`;export{e as t};
