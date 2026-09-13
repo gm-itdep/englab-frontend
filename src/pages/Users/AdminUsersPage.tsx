@@ -667,6 +667,12 @@ export function AdminUsersPage() {
   const session = getSession();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const notificationsTo = searchParams.toString()
+    ? `/notifications?${searchParams.toString()}`
+    : '/notifications';
+  const profileTo = searchParams.toString()
+    ? `/profile?${searchParams.toString()}`
+    : '/profile';
   const previewEmpty = searchParams.get('empty') === '1';
   const [search, setSearch] = useState(() => (previewEmpty ? 'Анна' : ''));
   const [roleFilter, setRoleFilter] = useState<RoleFilter>(() =>
@@ -812,12 +818,12 @@ export function AdminUsersPage() {
               <p className={styles.pageSubtitle}>Управление аккаунтами и&nbsp;доступом</p>
             </div>
             <div className={styles.topbarActions}>
-              <button type="button" className={styles.notificationButton} aria-label="Уведомления">
+              <Link to={notificationsTo} className={styles.notificationButton} aria-label="Уведомления">
                 <span className={styles.notificationIcon}>
                   <img src={ICON_NOTIFICATION} alt="" width={22.4} height={22.4} />
                 </span>
-              </button>
-              <button type="button" className={styles.userChip} aria-label={ADMIN_NAME}>
+              </Link>
+              <Link to={profileTo} className={styles.userChip} aria-label={ADMIN_NAME}>
                 <span className={styles.userProfile}>
                   <img src={AVATAR} alt="" className={styles.avatar} width={32} height={32} />
                   <span className={styles.userName}>{ADMIN_NAME}</span>
@@ -825,10 +831,10 @@ export function AdminUsersPage() {
                 <span className={styles.chevronWrap}>
                   <img src={ICON_CHEVRON} alt="" width={9} height={5} />
                 </span>
-              </button>
-              <button type="button" className={styles.mobileAvatarButton} aria-label={ADMIN_NAME}>
+              </Link>
+              <Link to={profileTo} className={styles.mobileAvatarButton} aria-label={ADMIN_NAME}>
                 <img src={MOBILE_AVATAR} alt="" width={32} height={32} className={styles.mobileAvatarImage} />
-              </button>
+              </Link>
             </div>
           </header>
 

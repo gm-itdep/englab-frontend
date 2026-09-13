@@ -23,6 +23,14 @@ const MOCK_DELAY_MS = 1500;
 
 export type UserRole = 'teacher' | 'admin' | 'student';
 
+export function getAppRole(searchParams: URLSearchParams): UserRole {
+  const session = getSession();
+  if (session?.role) return session.role;
+  const preview = searchParams.get('role');
+  if (preview === 'teacher' || preview === 'admin' || preview === 'student') return preview;
+  return 'student';
+}
+
 export type AuthUser = {
   email: string;
   name: string;

@@ -71,16 +71,15 @@ function IconImg({
 }
 
 function Sidebar({ onLogout }: { onLogout: () => void }) {
+  const [searchParams] = useSearchParams();
+  const notificationsTo = searchParams.toString()
+    ? `/notifications?${searchParams.toString()}`
+    : '/notifications';
   const topItems = [
     { icon: iconHome, iconSize: 28, label: th.navHome, to: '/home', active: false },
     { icon: iconCalendar, iconSize: 22.4, label: th.navCalendar, to: '/schedule', active: false },
     { icon: iconBook, iconSize: 22.4, label: th.navBook, to: '/lesson', active: false },
     { icon: iconStudents, iconSize: 22.4, label: th.navStudents, to: '/students', active: true },
-  ] as const;
-
-  const bottomItems = [
-    { icon: iconNotification, iconSize: 22.4, label: th.notifications, onClick: undefined },
-    { icon: iconExit, iconSize: 22.4, label: th.logout, onClick: onLogout },
   ] as const;
 
   return (
@@ -105,18 +104,19 @@ function Sidebar({ onLogout }: { onLogout: () => void }) {
           ))}
         </nav>
         <div className={styles.sidebarBottom}>
-          {bottomItems.map((item) => (
-            <button
-              key={item.label}
-              type="button"
-              className={styles.navBtn}
-              aria-label={item.label}
-              onClick={item.onClick}
-            >
-              <IconImg src={item.icon} box={32} size={item.iconSize} />
-              <span className={styles.navLabel}>{item.label}</span>
-            </button>
-          ))}
+          <Link to={notificationsTo} className={styles.navBtn} aria-label={th.notifications}>
+            <IconImg src={iconNotification} box={32} size={22.4} />
+            <span className={styles.navLabel}>{th.notifications}</span>
+          </Link>
+          <button
+            type="button"
+            className={styles.navBtn}
+            aria-label={th.logout}
+            onClick={onLogout}
+          >
+            <IconImg src={iconExit} box={32} size={22.4} />
+            <span className={styles.navLabel}>{th.logout}</span>
+          </button>
         </div>
       </div>
     </aside>
@@ -124,6 +124,10 @@ function Sidebar({ onLogout }: { onLogout: () => void }) {
 }
 
 function Topbar() {
+  const [searchParams] = useSearchParams();
+  const search = searchParams.toString();
+  const notificationsTo = search ? `/notifications?${search}` : '/notifications';
+  const profileTo = search ? `/profile?${search}` : '/profile';
   return (
     <header className={styles.topbar}>
       <div className={styles.topbarTitles}>
@@ -131,10 +135,10 @@ function Topbar() {
         <p className={styles.subtitle}>{tp.subtitle}</p>
       </div>
       <div className={styles.topbarActions}>
-        <button type="button" className={styles.iconButton} aria-label={th.notifications}>
+        <Link to={notificationsTo} className={styles.iconButton} aria-label={th.notifications}>
           <IconImg src={iconNotification} box={32} size={22.4} />
-        </button>
-        <button type="button" className={styles.userChip}>
+        </Link>
+        <Link to={profileTo} className={styles.userChip} aria-label={th.teacherName}>
           <span className={styles.userChipProfile}>
             <img src={imgAvatarTeacher} alt="" className={styles.userAvatar} width={32} height={32} />
             <span className={styles.userName}>{th.teacherName}</span>
@@ -142,10 +146,10 @@ function Topbar() {
           <span className={styles.userChevron}>
             <img src={iconChevron} alt="" width={9} height={5} />
           </span>
-        </button>
-        <button type="button" className={styles.mobileAvatarBtn} aria-label={th.teacherName}>
+        </Link>
+        <Link to={profileTo} className={styles.mobileAvatarBtn} aria-label={th.teacherName}>
           <img src={imgAvatarMobile} alt="" width={32} height={32} />
-        </button>
+        </Link>
       </div>
     </header>
   );

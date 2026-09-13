@@ -32,7 +32,9 @@
 
   /* Colors — Error */
   --color-error-50: #faebeb;
+  --color-error-400: #d46161;
   --color-error-500: #c93a3a;
+  --color-error-600: #a53333;
 
   /* Colors — Warning */
   --color-warning-50: #fcf4e6;
@@ -46,6 +48,7 @@
   --font-family-secondary: 'Manrope', system-ui, sans-serif;
 
   --font-size-h2: 24px;
+  --font-size-display: 32px;
   --font-size-body-l: 18px;
   --font-size-body-s: 14px;
   --font-size-button: 16px;
@@ -53,6 +56,7 @@
   --font-size-caption: 12px;
 
   --line-height-h2: 28px;
+  --line-height-display: 36px;
   --line-height-body-l: 22px;
   --line-height-body-s: 18px;
   --line-height-button: 20px;

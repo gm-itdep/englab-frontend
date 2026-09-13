@@ -1,0 +1,1359 @@
+.pageBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 414px;
+  grid-template-areas:
+    'upcoming upcoming'
+    'calendar sidebar';
+  gap: 16px;
+  width: 100%;
+  align-items: start;
+}
+
+.calendarColumn {
+  grid-area: calendar;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebarColumn {
+  grid-area: sidebar;
+  width: 414px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  padding: 24px;
+  background: var(--color-gray-0);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  box-sizing: border-box;
+}
+
+.toolbarTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.filterBtn {
+  display: none;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--color-gray-500);
+  border-radius: var(--radius-sm);
+  background: var(--color-gray-0);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.filterBtn img {
+  width: 16.8px;
+  height: 16.8px;
+  display: block;
+}
+
+.filterSwitcher {
+  display: flex;
+}
+
+.switcher {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 48px;
+  padding: 12px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 6px;
+  background: var(--color-gray-0);
+  box-sizing: border-box;
+}
+
+.switcherItem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 6px;
+  background: var(--color-gray-0);
+  color: var(--color-gray-900);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: var(--line-height-caption);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.switcherItemActive {
+  background: var(--color-primary-200);
+  color: var(--color-primary-800);
+}
+
+.bookBtn {
+  flex: 0 0 auto;
+  min-width: 120px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-500);
+  color: var(--color-primary-1000);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-button);
+  font-weight: 500;
+  line-height: var(--line-height-button);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.calendarCard {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 24px;
+  width: 100%;
+  padding: 24px;
+  background: var(--color-gray-0);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  box-sizing: border-box;
+}
+
+.calendarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.calendarTitle {
+  margin: 0;
+  color: var(--color-gray-1000);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-l);
+  font-weight: 500;
+  line-height: var(--line-height-body-l);
+}
+
+.calendarNav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calendarNavBtn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.calendarNavBtn img {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+.arrowPrev {
+  transform: rotate(180deg);
+}
+
+.calendarGrid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.weekdayRow,
+.daysGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  width: 100%;
+}
+
+.weekdayCell {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray-800);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+}
+
+.dayCell {
+  height: 68px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 8px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 6px;
+  background: var(--color-gray-0);
+  color: var(--color-gray-800);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  cursor: pointer;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.dayCell:disabled,
+.dayOutside {
+  color: var(--color-gray-500);
+  cursor: default;
+  opacity: 1;
+}
+
+.daySelected {
+  border-color: var(--color-primary-700);
+  color: var(--color-primary-700);
+}
+
+.dayDots {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.dotGreen {
+  background: var(--color-secondary-500);
+}
+
+.dotRed {
+  background: var(--color-error-500);
+}
+
+.dotGray {
+  background: var(--color-gray-700);
+}
+
+.dotExtra {
+  color: var(--color-gray-700);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-caption);
+  font-weight: 300;
+  line-height: var(--line-height-caption);
+}
+
+.legend {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-gray-200);
+  box-sizing: border-box;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+}
+
+.legendItem .dot {
+  width: 4px;
+  height: 4px;
+}
+
+.legendCompleted {
+  color: var(--color-error-500);
+}
+
+.legendPlanned {
+  color: var(--color-secondary-500);
+}
+
+.legendCancelled {
+  color: var(--color-gray-700);
+}
+
+.legendCancelledMobile {
+  display: none;
+}
+
+.timezoneRow {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 48px;
+}
+
+.timezoneInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.timezoneIcon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.timezoneIcon img {
+  width: 16.8px;
+  height: 16.8px;
+  display: block;
+}
+
+.timezoneLabel {
+  margin: 0;
+  color: var(--color-gray-1000);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+}
+
+.timezoneBtn {
+  height: 48px;
+  padding: 12px 16px;
+  border: 1px solid var(--color-gray-800);
+  border-radius: var(--radius-sm);
+  background: var(--color-gray-0);
+  color: var(--color-primary-1000);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-button);
+  font-weight: 500;
+  line-height: var(--line-height-button);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.lessonCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 452px;
+  min-height: 452px;
+  padding: 24px;
+  background: var(--color-gray-0);
+  border: none;
+  border-left: 4px solid var(--color-primary-500);
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 12px rgba(131, 131, 131, 0.24);
+  box-sizing: border-box;
+}
+
+.lessonTitle {
+  margin: 0;
+  color: var(--color-gray-1000);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-l);
+  font-weight: 500;
+  line-height: var(--line-height-body-l);
+}
+
+.lessonTop {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.lessonBody {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.lessonTime {
+  margin: 0;
+  color: var(--color-primary-800);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-l);
+  font-weight: 400;
+  line-height: var(--line-height-body-l);
+}
+
+.metaLines {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.metaRow img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.metaText {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+}
+
+.metaLabel {
+  color: var(--color-gray-700);
+}
+
+.metaValue {
+  color: var(--color-gray-1000);
+}
+
+.infoBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: var(--radius-xs);
+  background: var(--color-primary-100);
+  box-sizing: border-box;
+}
+
+.infoBadge img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.infoBadgeText {
+  color: var(--color-primary-700);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-mono);
+  font-weight: 300;
+  line-height: var(--line-height-mono);
+}
+
+.countdown {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-xs);
+  box-sizing: border-box;
+}
+
+.countdownUnit {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+}
+
+.countdownSep {
+  flex-shrink: 0;
+  font-family: var(--font-family-base);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-primary-600);
+  line-height: 24px;
+}
+
+.countdownBlock {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  padding: 0 12px;
+}
+
+.countdownValue {
+  font-family: var(--font-family-base);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--color-primary-600);
+}
+
+.countdownLabel {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: var(--line-height-caption);
+  color: var(--color-gray-900);
+}
+
+.lessonActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.btnDisabled,
+.btnOutline,
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 44px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-button);
+  font-weight: 500;
+  line-height: var(--line-height-button);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.btnDisabled {
+  border: none;
+  background: var(--color-gray-100);
+  color: var(--color-gray-500);
+  cursor: not-allowed;
+}
+
+.btnOutline {
+  border: 1px solid var(--color-gray-800);
+  background: var(--color-gray-0);
+  color: var(--color-primary-1000);
+}
+
+.btnPrimary {
+  border: none;
+  background: var(--color-primary-500);
+  color: var(--color-primary-1000);
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.emptyIconWrap {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.emptyIconWrap img {
+  width: 56px;
+  height: 56px;
+  display: block;
+  object-fit: contain;
+}
+
+.emptyText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+.emptyTitle {
+  margin: 0;
+  color: var(--color-gray-1000);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 500;
+  line-height: var(--line-height-body-s);
+}
+
+.emptyDesc {
+  margin: 0;
+  color: var(--color-gray-800);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+}
+
+.lessonCardEmpty {
+  height: 440px;
+  min-height: 440px;
+}
+
+.upcomingSection {
+  grid-area: upcoming;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  padding: 16px;
+  background: var(--color-gray-0);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  box-sizing: border-box;
+}
+
+.upcomingTitle {
+  margin: 0;
+  color: var(--color-gray-1000);
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.upcomingGrid {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+}
+
+.upcomingLesson {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.upcomingLessonBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.upcomingDate {
+  margin: 0;
+  color: var(--color-primary-800);
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.upcomingMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.upcomingMetaRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.upcomingMetaIcon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.upcomingMetaIcon img {
+  width: 14px;
+  height: 14px;
+  display: block;
+  object-fit: contain;
+}
+
+.upcomingMetaText {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+}
+
+.upcomingMetaLabel {
+  color: var(--color-gray-700);
+  white-space: nowrap;
+}
+
+.upcomingMetaValue {
+  color: var(--color-gray-1000);
+}
+
+.upcomingMetaTime {
+  color: var(--color-primary-800);
+}
+
+.weekCalendar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.weekHeader {
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  gap: 0;
+  width: 100%;
+}
+
+.weekHeaderGutter {
+  width: 60px;
+}
+
+.weekHeaderDays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  min-width: 0;
+}
+
+.weekDayHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 6px;
+  background: var(--color-gray-0);
+  cursor: pointer;
+  box-sizing: border-box;
+  appearance: none;
+  font: inherit;
+}
+
+.weekDayHeadSelected {
+  border-color: var(--color-primary-700);
+}
+
+.weekDayName {
+  color: var(--color-gray-800);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 300;
+  line-height: var(--line-height-body-s);
+  white-space: nowrap;
+}
+
+.weekDayDate {
+  color: var(--color-gray-1000);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  white-space: nowrap;
+}
+
+.weekDayHeadSelected .weekDayDate {
+  color: var(--color-primary-700);
+}
+
+.weekBody {
+  position: relative;
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  width: 100%;
+}
+
+.weekEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.weekEmptyDesktop {
+  position: absolute;
+  inset: 0;
+  grid-column: 1 / -1;
+  grid-row: 1;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.weekEmptyDesktop .weekEmptyBtn {
+  pointer-events: auto;
+}
+
+.weekEmptyContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 372px;
+}
+
+.weekEmptyIcon {
+  width: 80px;
+  height: 80px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.weekEmptyIcon img {
+  width: 56px;
+  height: 56px;
+  display: block;
+  object-fit: contain;
+}
+
+.weekEmptyBtn {
+  width: 316px;
+  flex: none;
+}
+
+.weekHours {
+  display: flex;
+  flex-direction: column;
+}
+
+.weekHourLabel {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 12px 8px;
+  color: var(--color-gray-700);
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 20px;
+  box-sizing: border-box;
+}
+
+.weekCols {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  min-width: 0;
+}
+
+.weekCol {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.weekSlot {
+  height: 45px;
+  border-style: dashed;
+  border-color: var(--color-gray-200);
+  border-width: 0 1px 1px 0;
+  box-sizing: border-box;
+}
+
+.weekCol:first-child .weekSlot {
+  border-left-width: 1px;
+}
+
+.weekCol:first-child .weekSlot:first-child {
+  border-top-left-radius: 6px;
+}
+
+.weekCol:last-child .weekSlot:first-child {
+  border-top-right-radius: 6px;
+}
+
+.weekCol:first-child .weekSlot:last-child {
+  border-bottom-left-radius: 6px;
+}
+
+.weekCol:last-child .weekSlot:last-child {
+  border-bottom-right-radius: 6px;
+}
+
+.weekCol .weekSlot:first-child {
+  border-top-width: 1px;
+}
+
+.weekEvent {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px;
+  background: var(--color-gray-0);
+  border-width: 0.5px;
+  border-style: solid;
+  border-radius: 6px;
+  box-sizing: border-box;
+  z-index: 1;
+  overflow: hidden;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  font: inherit;
+  color: inherit;
+}
+
+.weekEventMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+}
+
+.weekEventTime,
+.weekEventTeacher,
+.weekEventStatus {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: var(--line-height-caption);
+}
+
+.weekEventTime {
+  color: var(--color-gray-800);
+}
+
+.weekEventTeacher {
+  color: var(--color-gray-1000);
+}
+
+.weekEventStatus {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.weekStatusDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.weekEventDone {
+  border-color: var(--color-gray-700);
+}
+
+.weekEventDone .weekEventStatus {
+  color: var(--color-gray-700);
+}
+
+.weekEventDone .weekStatusDot {
+  background: var(--color-gray-700);
+}
+
+.weekEventScheduled {
+  border-color: var(--color-secondary-500);
+}
+
+.weekEventScheduled .weekEventStatus {
+  color: var(--color-secondary-500);
+}
+
+.weekEventScheduled .weekStatusDot {
+  background: var(--color-secondary-500);
+}
+
+.weekEventSoon {
+  border-color: var(--color-warning-500);
+}
+
+.weekEventSoon .weekEventStatus {
+  color: var(--color-warning-500);
+}
+
+.weekEventSoon .weekStatusDot {
+  background: var(--color-warning-500);
+}
+
+.weekEventCancelled {
+  border-color: var(--color-error-500);
+}
+
+.weekEventCancelled .weekEventStatus {
+  color: var(--color-error-500);
+}
+
+.weekEventCancelled .weekStatusDot {
+  background: var(--color-error-500);
+}
+
+.weekMobileList {
+  display: none;
+}
+
+@media (max-width: 1407px) and (min-width: 768px) {
+  .pageBody {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'upcoming'
+      'calendar'
+      'sidebar';
+  }
+
+  .sidebarColumn {
+    width: 100%;
+  }
+
+  .lessonCard,
+  .lessonCardEmpty {
+    height: auto;
+  }
+
+  .toolbar {
+    padding: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .bookBtn {
+    width: 100%;
+    flex: none;
+    height: 44px;
+  }
+}
+
+@media (max-width: 767px) {
+  .pageBody {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'sidebar'
+      'calendar'
+      'upcoming';
+    gap: 16px;
+  }
+
+  .sidebarColumn {
+    width: 100%;
+  }
+
+  .upcomingGrid {
+    flex-direction: column;
+  }
+
+  .upcomingLesson {
+    flex: none;
+    width: 100%;
+  }
+
+  .upcomingTitle,
+  .upcomingDate {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .toolbarTop {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 12px;
+  }
+
+  .filterBtn {
+    display: flex;
+  }
+
+  .filterSwitcher {
+    display: none;
+    flex: 1 1 100%;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .filterSwitcherOpen {
+    display: flex;
+  }
+
+  .weekCalendar {
+    gap: 12px;
+  }
+
+  .bookBtn {
+    width: 100%;
+    flex: none;
+    height: 44px;
+  }
+
+  .calendarCard {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .calendarTitle {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .calendarNavBtn {
+    width: 24px;
+    height: 24px;
+  }
+
+  .calendarNavBtn img {
+    width: 16.8px;
+    height: 16.8px;
+  }
+
+  .weekdayCell {
+    height: 56px;
+  }
+
+  .dayCell {
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0 4px;
+    gap: 3px;
+  }
+
+  .dayCell.dayWithDots {
+    justify-content: flex-end;
+  }
+
+  .dot {
+    width: 4px;
+    height: 4px;
+  }
+
+  .legend {
+    padding-top: 8px;
+  }
+
+  .legendCancelledDesktop {
+    display: none;
+  }
+
+  .legendCancelledMobile {
+    display: inline;
+  }
+
+  .weekHeader {
+    display: none;
+  }
+
+  .weekBody {
+    display: none;
+  }
+
+  .weekMobileList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .weekMobileDayRow {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 4px;
+    width: 100%;
+  }
+
+  .weekMobileLessons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .weekEmptyMobile {
+    height: 270px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .weekEmptyMobile .weekEmptyContent {
+    gap: 12px;
+    max-width: none;
+  }
+
+  .weekEmptyMobile .weekEmptyIcon {
+    width: 64px;
+    height: 64px;
+    padding: 16px;
+  }
+
+  .weekEmptyMobile .weekEmptyIcon img {
+    width: 44.8px;
+    height: 44.8px;
+  }
+
+  .weekEmptyMobile .weekEmptyBtn {
+    width: 100%;
+  }
+
+  .weekMobileCard {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px;
+    background: var(--color-gray-0);
+    border-width: 0.5px;
+    border-style: solid;
+    border-radius: 6px;
+    box-sizing: border-box;
+    text-align: left;
+    cursor: pointer;
+    appearance: none;
+    font: inherit;
+    color: inherit;
+  }
+
+  .weekMobileCardBody {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .weekMobileCardTop {
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .weekMobileCardTop .weekEventTeacher {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .weekMobileCardArrow {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .lessonCard,
+  .lessonCardEmpty {
+    height: auto;
+    min-height: 320px;
+    padding: 16px;
+    border-left-width: 2px;
+  }
+
+  .lessonTitle {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .lessonTime {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .emptyState {
+    gap: 12px;
+  }
+
+  .emptyIconWrap {
+    width: 64px;
+    height: 64px;
+  }
+
+  .emptyIconWrap img {
+    width: 44.8px;
+    height: 44.8px;
+  }
+
+  .countdown {
+    padding: 8px;
+  }
+
+  .countdownBlock {
+    padding: 0 8px;
+  }
+
+  .countdownValue,
+  .countdownSep {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .timezoneBtn {
+    height: 44px;
+  }
+}

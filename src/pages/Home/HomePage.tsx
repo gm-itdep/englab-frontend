@@ -14,7 +14,16 @@ export function HomePage() {
 
   const isPreviewState =
     searchParams.get('loading') === '1' || searchParams.get('empty') === '1';
-  const role = session?.role ?? (isPreviewState ? 'admin' : null);
+  const previewRole = searchParams.get('role');
+  const role =
+    session?.role ??
+    (isPreviewState
+      ? previewRole === 'student'
+        ? 'student'
+        : previewRole === 'teacher'
+          ? 'teacher'
+          : 'admin'
+      : null);
 
   if (!session && !isPreviewState) {
     return <Navigate to="/login" replace />;

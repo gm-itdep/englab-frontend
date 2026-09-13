@@ -190,6 +190,49 @@
   padding-right: 12px;
 }
 
+.headingWrapWide {
+  width: auto;
+  min-width: 140px;
+}
+
+.headingWithBack {
+  width: auto;
+  min-width: 0;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding-right: 16px;
+}
+
+.headingText {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.backBtn {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-gray-0);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.backIcon {
+  width: 16.8px;
+  height: 16.8px;
+  display: block;
+  transform: rotate(180deg);
+}
+
 .pageTitle {
   margin: 0;
   color: var(--color-gray-1000);
@@ -197,6 +240,11 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 24px;
+}
+
+.pageTitleLg {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
 }
 
 .pageTitleMobile {
@@ -222,6 +270,10 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.topbarActionsEnd {
+  justify-content: flex-end;
 }
 
 .search {
@@ -268,6 +320,7 @@
 }
 
 .notificationBtn {
+  position: relative;
   width: 48px;
   height: 48px;
   display: flex;
@@ -278,6 +331,24 @@
   border-radius: var(--radius-md);
   background: var(--color-gray-0);
   cursor: pointer;
+  box-sizing: border-box;
+}
+
+.bellBadge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: var(--color-primary-500);
+  color: var(--color-gray-1000);
+  font-family: var(--font-family-base);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: center;
   box-sizing: border-box;
 }
 
@@ -796,6 +867,7 @@
 .btnOutline,
 .btnPrimary,
 .btnAccentOutline,
+.btnErrorOutline,
 .btnSecondary {
   display: inline-flex;
   align-items: center;
@@ -835,6 +907,12 @@
   border: 1px solid var(--color-primary-600);
   background: var(--color-gray-0);
   color: var(--color-primary-600);
+}
+
+.btnErrorOutline {
+  border: 1px solid var(--color-error-600);
+  background: var(--color-gray-0);
+  color: var(--color-error-600);
 }
 
 .btnSecondary {
@@ -1480,6 +1558,153 @@
   display: none;
 }
 
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.emptyIconWrap {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.emptyIconWrap img {
+  width: 56px;
+  height: 56px;
+  display: block;
+  object-fit: contain;
+}
+
+.emptyText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+.emptyTitle {
+  margin: 0;
+  color: var(--color-gray-1000);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 500;
+  line-height: var(--line-height-body-s);
+}
+
+.emptyDesc {
+  margin: 0;
+  color: var(--color-gray-800);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+}
+
+.emptyDescMobile {
+  display: none;
+}
+
+.calendarEmpty {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-gray-200);
+  box-sizing: border-box;
+}
+
+.calendarEmptyIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendarEmptyIcon img {
+  width: 14px;
+  height: 14px;
+  display: block;
+  object-fit: contain;
+}
+
+.calendarEmptyText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.calendarEmptyLine1,
+.calendarEmptyLine2 {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+}
+
+.calendarEmptyLine1 {
+  color: var(--color-gray-700);
+}
+
+.calendarEmptyLine2 {
+  color: var(--color-gray-1000);
+}
+
+.upcomingTitleMobile {
+  display: none;
+}
+
+.chartEmptyMessage {
+  position: absolute;
+  left: 50%;
+  top: 48px;
+  transform: translateX(-50%);
+  margin: 0;
+  width: min(100%, 189px);
+  text-align: center;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-s);
+  font-weight: 400;
+  line-height: var(--line-height-body-s);
+  color: var(--color-gray-1000);
+}
+
+.infoBadgeError {
+  background: var(--color-error-50);
+}
+
+.infoBadgeError .infoBadgeText {
+  color: var(--color-error-500);
+}
+
+.progressCardEmpty {
+  height: auto;
+  min-height: 440px;
+}
+
+.upcomingCardEmpty .upcomingTop {
+  flex: 1;
+  min-height: 0;
+}
+
 @media (max-width: 1407px) and (min-width: 768px) {
   .shell {
     padding: 24px;
@@ -1515,6 +1740,32 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  .topbar {
+    flex-wrap: wrap;
+    row-gap: 12px;
+  }
+
+  .headingWrap,
+  .headingWithBack {
+    flex: 1 1 auto;
+  }
+
+  .topbarActions {
+    display: contents;
+  }
+
+  .searchDesktop {
+    order: 10;
+    flex: 1 1 100%;
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .notificationWrap,
+  .userChipWrap {
+    flex-shrink: 0;
+  }
 }
 
 @media (max-width: 767px) {
@@ -1547,6 +1798,11 @@
     min-width: 0;
     flex: 1;
     max-width: none;
+  }
+
+  .headingWithBack {
+    gap: 6px;
+    padding-right: 0;
   }
 
   .pageTitleDesktop {
@@ -1609,6 +1865,7 @@
     width: 100% !important;
     max-width: none !important;
     min-width: 0 !important;
+    min-height: 0;
     height: auto !important;
     padding: 16px;
   }
@@ -1616,6 +1873,48 @@
   .nearestCard {
     height: 440px !important;
     border-left-width: 2px;
+  }
+
+  .nearestCardEmpty {
+    height: 320px !important;
+  }
+
+  .upcomingCardEmpty {
+    height: 300px !important;
+  }
+
+  .emptyState {
+    gap: 12px;
+  }
+
+  .emptyIconWrap {
+    width: 64px;
+    height: 64px;
+  }
+
+  .emptyIconWrap img {
+    width: 44.8px;
+    height: 44.8px;
+  }
+
+  .emptyDescDesktop {
+    display: none;
+  }
+
+  .emptyDescMobile {
+    display: inline;
+  }
+
+  .upcomingTitleDesktop {
+    display: none;
+  }
+
+  .upcomingTitleMobile {
+    display: inline;
+  }
+
+  .calendarEmpty {
+    padding-top: 8px;
   }
 
   .metaRow {

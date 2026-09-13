@@ -143,11 +143,29 @@ export function formatWeekRange(weekOffset: number): string {
   return `${formatDayMonth(start)} ${start.getFullYear()} - ${formatDayMonth(end)} ${year}`;
 }
 
+/** Mock "today" in Figma data — Wednesday 1 July 2026. */
+const MOCK_TODAY = addDays(BASE_WEEK_START, 2);
+
 /** e.g. "Среда, 1 июля" */
 export function formatSelectionDate(weekOffset: number, dayIndex: number): string {
   const day = buildWeekDays(weekOffset)[dayIndex];
   if (!day) return '—';
   return `${WEEKDAYS_FULL[dayIndex]}, ${formatDayMonth(day.fullDate)}`;
+}
+
+/** e.g. "Завтра, 2 июля" when the selected day is relative to mock today. */
+export function formatRelativeSelectionDate(weekOffset: number, dayIndex: number): string {
+  const day = buildWeekDays(weekOffset)[dayIndex];
+  if (!day) return '—';
+
+  const startOf = (date: Date) => Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+  const diff = Math.round((startOf(day.fullDate) - startOf(MOCK_TODAY)) / 86_400_000);
+  const datePart = formatDayMonth(day.fullDate);
+
+  if (diff === 0) return `Сегодня, ${datePart}`;
+  if (diff === 1) return `Завтра, ${datePart}`;
+  if (diff === 2) return `Послезавтра, ${datePart}`;
+  return `${WEEKDAYS_FULL[dayIndex]}, ${datePart}`;
 }
 
 export function getSlot(dayIndex: number, timeIndex: number, weekOffset = 0): ScheduleSlot {

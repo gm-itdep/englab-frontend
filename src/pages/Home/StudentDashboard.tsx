@@ -1,22 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { clearSession, getSession } from '../../shared/auth/mockAuth';
+import { useEffect, useState, type ReactNode } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { StudentLayout } from './StudentLayout';
 import styles from './StudentDashboard.module.css';
 
-import LOGO_COMPACT from '../../assets/icons/student/logo.svg';
-import LOGO_FULL from '../../assets/icons/student/logo-full.svg';
-import ICON_HOME from '../../assets/icons/student/home.svg';
-import ICON_CALENDAR from '../../assets/icons/student/calendar.svg';
-import ICON_PENCIL from '../../assets/icons/student/pencil.svg';
-import ICON_MATERIALS from '../../assets/icons/student/materials.svg';
-import ICON_WALLET from '../../assets/icons/student/wallet.svg';
-import ICON_PROGRESS from '../../assets/icons/student/progress.svg';
-import ICON_NOTIFICATION from '../../assets/icons/student/notification.svg';
-import ICON_PERSON from '../../assets/icons/student/person.svg';
-import ICON_EXIT from '../../assets/icons/student/exit.svg';
-import ICON_SEARCH from '../../assets/icons/student/search.svg';
-import ICON_NOTIFICATION_TOP from '../../assets/icons/student/notification-top.svg';
-import ICON_CHEVRON from '../../assets/icons/student/chevron.svg';
 import ICON_PERSON_SM from '../../assets/icons/student/person-sm.svg';
 import ICON_BOOK from '../../assets/icons/student/book.svg';
 import ICON_INFO from '../../assets/icons/student/info.svg';
@@ -27,29 +13,18 @@ import ICON_PURPOSE from '../../assets/icons/student/purpose.svg';
 import ICON_LESSON from '../../assets/icons/student/lesson.svg';
 import ICON_MEDAL from '../../assets/icons/student/medal.svg';
 import ICON_CHECK from '../../assets/icons/student/check-mark.svg';
-import ICON_DOTS from '../../assets/icons/student/dots.svg';
-import ICON_NOTIF_CALENDAR from '../../assets/icons/student/notif-calendar.svg';
-import ICON_NOTIF_MESSAGE from '../../assets/icons/student/notif-message.svg';
-import ICON_NOTIF_NOTE from '../../assets/icons/student/notif-note.svg';
-import ICON_UNREAD_DOT from '../../assets/icons/student/unread-dot.svg';
+import ICON_EMPTY_SLOT from '../../assets/icons/student/empty-slot.svg';
+import ICON_EMPTY_HOMEWORK from '../../assets/icons/student/empty-homework.svg';
+import ICON_EMPTY_LESSON from '../../assets/icons/student/empty-lesson.svg';
+import ICON_EMPTY_SLOT_SM from '../../assets/icons/student/empty-slot-sm.svg';
+import ICON_ATTENTION from '../../assets/icons/student/attention.svg';
 import CHART_AREA from '../../assets/icons/student/chart-area.svg';
 import CHART_LINE from '../../assets/icons/student/chart-line.svg';
 import CHART_DOT from '../../assets/icons/student/chart-dot.svg';
 import BALANCE_RING from '../../assets/icons/student/balance-ring.svg';
-import AVATAR from '../../assets/images/student/avatar.png';
+import BALANCE_RING_EMPTY from '../../assets/icons/student/balance-ring-empty.svg';
 import TEACHER_1 from '../../assets/images/student/teacher-1.png';
 import TEACHER_2 from '../../assets/images/student/teacher-2.png';
-
-const STUDENT_LEVEL = 'B1+';
-
-const NAV_TOP = [
-  { icon: ICON_HOME, label: 'Главная', to: '/home', active: true },
-  { icon: ICON_CALENDAR, label: 'Расписание', to: '/schedule', active: false },
-  { icon: ICON_PENCIL, label: 'Запись', to: '/booking', active: false },
-  { icon: ICON_MATERIALS, label: 'Материалы', to: '/materials', active: false },
-  { icon: ICON_WALLET, label: 'Баланс', to: '/balance', active: false },
-  { icon: ICON_PROGRESS, label: 'Прогресс', to: '/progress', active: false },
-] as const;
 
 type DotColor = 'green' | 'red' | 'gray';
 
@@ -132,42 +107,6 @@ const UPCOMING = [
   },
 ] as const;
 
-type NotifTone = 'lesson' | 'comment' | 'homework';
-
-const NOTIFICATIONS: {
-  id: string;
-  tone: NotifTone;
-  title: string;
-  desc: string;
-  time: string;
-  unread?: boolean;
-  showDot?: boolean;
-}[] = [
-  {
-    id: '1',
-    tone: 'lesson',
-    title: 'Урок скоро начнётся',
-    desc: 'Business Negotiations начнётся сегодня в 19:00.',
-    time: '16:30',
-  },
-  {
-    id: '2',
-    tone: 'comment',
-    title: 'Преподаватель оставил комментарий',
-    desc: 'К домашнему заданию по уроку Present Perfect добавлен комментарий.',
-    time: '14:15',
-    showDot: true,
-  },
-  {
-    id: '3',
-    tone: 'homework',
-    title: 'Добавлено новое домашнее задание',
-    desc: 'Контекст',
-    time: 'Вчера, 11:20',
-    unread: true,
-  },
-];
-
 const LESSON_START_HOUR = 19;
 const LESSON_START_MINUTE = 0;
 
@@ -233,12 +172,17 @@ function useLessonCountdown(): CountdownParts & { lessonTimeLabel: string } {
   return { ...parts, lessonTimeLabel };
 }
 
-function buildCalendarDays(year: number, month: number, selectedDay: number): CalendarDay[] {
+function buildCalendarDays(
+  year: number,
+  month: number,
+  selectedDay: number,
+  hasPlans = true,
+): CalendarDay[] {
   const first = new Date(year, month, 1);
   const startWeekday = (first.getDay() + 6) % 7;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const prevDays = new Date(year, month, 0).getDate();
-  const dots = month === 6 ? JULY_DOTS : {};
+  const dots = hasPlans && month === 6 ? JULY_DOTS : {};
 
   const days: CalendarDay[] = [];
 
@@ -268,75 +212,42 @@ function homeworkStatusClass(status: HomeworkStatus): string {
   return styles.hwStatusDone;
 }
 
-function notifIcon(tone: NotifTone): string {
-  if (tone === 'lesson') return ICON_NOTIF_CALENDAR;
-  if (tone === 'comment') return ICON_NOTIF_MESSAGE;
-  return ICON_NOTIF_NOTE;
-}
-
-function notifIconClass(tone: NotifTone): string {
-  if (tone === 'lesson') return styles.notifIconLesson;
-  if (tone === 'comment') return styles.notifIconComment;
-  return styles.notifIconHomework;
-}
-
-function SearchField({ className }: { className?: string }) {
+function CardEmptyState({
+  icon,
+  title,
+  description,
+}: {
+  icon: string;
+  title: string;
+  description: ReactNode;
+}) {
   return (
-    <label className={[styles.search, className].filter(Boolean).join(' ')}>
-      <img src={ICON_SEARCH} alt="" width={20} height={20} />
-      <input type="search" placeholder="Поиск по материалам и урокам" />
-    </label>
+    <div className={styles.emptyState}>
+      <div className={styles.emptyIconWrap}>
+        <img src={icon} alt="" width={56} height={56} />
+      </div>
+      <div className={styles.emptyText}>
+        <p className={styles.emptyTitle}>{title}</p>
+        <p className={styles.emptyDesc}>{description}</p>
+      </div>
+    </div>
   );
 }
 
 export function StudentDashboard() {
   const navigate = useNavigate();
-  const session = getSession();
-  const name = session?.name || 'Иван Васильев';
+  const [searchParams] = useSearchParams();
   const countdown = useLessonCountdown();
+  const isEmpty = searchParams.get('empty') === '1';
+  const role = searchParams.get('role');
+  const topupTo = role ? `/balance/topup?role=${role}` : '/balance/topup';
+  const bookingTo = role ? `/booking?role=${role}` : '/booking';
+  const materialsTo = role ? `/materials?role=${role}` : '/materials';
 
   const [viewMonth, setViewMonth] = useState(6);
   const [selectedDay, setSelectedDay] = useState(1);
-  const [notifOpen, setNotifOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
-  const notifRef = useRef<HTMLDivElement>(null);
-  const userMenuRef = useRef<HTMLDivElement>(null);
-
-  const calendarDays = buildCalendarDays(2025, viewMonth, selectedDay);
-
-  useEffect(() => {
-    if (!notifOpen && !userMenuOpen) return;
-
-    const onPointerDown = (event: MouseEvent) => {
-      const target = event.target as Node;
-      if (notifOpen && notifRef.current && !notifRef.current.contains(target)) {
-        setNotifOpen(false);
-      }
-      if (userMenuOpen && userMenuRef.current && !userMenuRef.current.contains(target)) {
-        setUserMenuOpen(false);
-      }
-    };
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setNotifOpen(false);
-        setUserMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', onPointerDown);
-    document.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.removeEventListener('mousedown', onPointerDown);
-      document.removeEventListener('keydown', onKeyDown);
-    };
-  }, [notifOpen, userMenuOpen]);
-
-  const handleLogout = () => {
-    clearSession();
-    navigate('/login', { replace: true });
-  };
+  const calendarDays = buildCalendarDays(2025, viewMonth, selectedDay, !isEmpty);
 
   const countdownUnits = [
     { value: String(countdown.days), label: pluralRu(countdown.days, 'день', 'дня', 'дней') },
@@ -352,187 +263,31 @@ export function StudentDashboard() {
   ];
 
   return (
-    <div className={styles.page}>
-      <div className={styles.shell}>
-        <aside className={styles.sidebar} aria-label="Навигация">
-          <div className={styles.logoWrap}>
-            <img src={LOGO_COMPACT} alt="" className={styles.logoCompact} width={38} height={26} />
-            <img src={LOGO_FULL} alt="EngLab" className={styles.logoFull} width={110} height={27} />
-          </div>
-          <div className={styles.sidebarBody}>
-            <nav className={styles.sidebarTop} aria-label="Основное меню">
-              {NAV_TOP.map((item) => {
-                const className = [
-                  styles.sidebarItem,
-                  item.active ? styles.sidebarItemActive : '',
-                ]
-                  .filter(Boolean)
-                  .join(' ');
-                return (
-                  <Link key={item.label} to={item.to} className={className}>
-                    <span className={styles.sidebarIconWrap}>
-                      <img src={item.icon} alt="" />
-                    </span>
-                    <span className={styles.sidebarLabel}>{item.label}</span>
-                  </Link>
-                );
-              })}
-            </nav>
-            <div className={styles.sidebarBottom}>
-              <button
-                type="button"
-                className={styles.sidebarItem}
-                onClick={() => {
-                  setUserMenuOpen(false);
-                  setNotifOpen((open) => !open);
-                }}
-              >
-                <span className={styles.sidebarIconWrap}>
-                  <img src={ICON_NOTIFICATION} alt="" />
-                </span>
-                <span className={styles.sidebarLabel}>Уведомления</span>
-              </button>
-              <button type="button" className={styles.sidebarItem}>
-                <span className={styles.sidebarIconWrap}>
-                  <img src={ICON_PERSON} alt="" />
-                </span>
-                <span className={styles.sidebarLabel}>Профиль</span>
-              </button>
-              <button type="button" className={styles.sidebarItem} onClick={handleLogout}>
-                <span className={styles.sidebarIconWrap}>
-                  <img src={ICON_EXIT} alt="" />
-                </span>
-                <span className={styles.sidebarLabel}>Выход</span>
-              </button>
-            </div>
-          </div>
-        </aside>
-
-        <div className={styles.main}>
-          <header className={styles.topbar}>
-            <div className={styles.headingWrap}>
-              <h1 className={styles.pageTitle}>
-                <span className={styles.pageTitleDesktop}>Главная</span>
-                <span className={styles.pageTitleMobile}>Обзор</span>
-              </h1>
-              <p className={styles.pageSubtitle}>Ваше обучение</p>
-            </div>
-            <div className={styles.topbarActions}>
-              <SearchField className={styles.searchDesktop} />
-              <div className={styles.notificationWrap} ref={notifRef}>
-                <button
-                  type="button"
-                  className={styles.notificationBtn}
-                  aria-label="Уведомления"
-                  aria-expanded={notifOpen}
-                  onClick={() => {
-                    setUserMenuOpen(false);
-                    setNotifOpen((open) => !open);
-                  }}
-                >
-                  <img src={ICON_NOTIFICATION_TOP} alt="" width={24} height={24} />
-                </button>
-                {notifOpen ? (
-                  <div className={styles.notifPanel} role="dialog" aria-label="Уведомления">
-                    <div className={styles.notifHeader}>
-                      <p className={styles.notifTitle}>Уведомления</p>
-                      <button type="button" className={styles.notifReadAll}>
-                        Прочитать все
-                      </button>
-                    </div>
-                    <div className={styles.notifList}>
-                      {NOTIFICATIONS.map((item) => (
-                        <div
-                          key={item.id}
-                          className={[
-                            styles.notifItem,
-                            item.unread ? styles.notifItemUnread : '',
-                          ]
-                            .filter(Boolean)
-                            .join(' ')}
-                        >
-                          <div className={styles.notifItemBody}>
-                            <span className={`${styles.notifIcon} ${notifIconClass(item.tone)}`}>
-                              <img src={notifIcon(item.tone)} alt="" />
-                            </span>
-                            <div className={styles.notifText}>
-                              <p className={styles.notifItemTitle}>{item.title}</p>
-                              <p className={styles.notifItemDesc}>{item.desc}</p>
-                              <p className={styles.notifItemTime}>{item.time}</p>
-                            </div>
-                            {item.showDot ? (
-                              <img src={ICON_UNREAD_DOT} alt="" className={styles.notifUnreadDot} />
-                            ) : null}
-                          </div>
-                          <span className={styles.notifDots}>
-                            <img src={ICON_DOTS} alt="" />
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                    <button type="button" className={styles.btnSecondary}>
-                      Смотреть все уведомления
-                    </button>
-                  </div>
-                ) : null}
-              </div>
-              <div className={styles.userChipWrap} ref={userMenuRef}>
-                <button
-                  type="button"
-                  className={styles.userChip}
-                  aria-expanded={userMenuOpen}
-                  onClick={() => {
-                    setNotifOpen(false);
-                    setUserMenuOpen((open) => !open);
-                  }}
-                >
-                  <span className={styles.userChipProfile}>
-                    <img src={AVATAR} alt="" className={styles.userAvatar} width={32} height={32} />
-                    <span className={styles.userChipText}>
-                      <span className={styles.userName}>{name}</span>
-                      <span className={styles.levelBadge}>{STUDENT_LEVEL}</span>
-                    </span>
-                  </span>
-                  <span className={styles.chevronWrap}>
-                    <img src={ICON_CHEVRON} alt="" width={9} height={5} />
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  className={styles.mobileAvatarBtn}
-                  aria-label={name}
-                  onClick={() => {
-                    setNotifOpen(false);
-                    setUserMenuOpen((open) => !open);
-                  }}
-                >
-                  <img src={AVATAR} alt="" className={styles.userAvatar} width={32} height={32} />
-                </button>
-                {userMenuOpen ? (
-                  <div className={styles.userMenu} role="menu">
-                    <button type="button" className={styles.userMenuItem} role="menuitem">
-                      Профиль
-                      <img src={ICON_ARROW_LITE} alt="" width={24} height={24} />
-                    </button>
-                    <button
-                      type="button"
-                      className={`${styles.userMenuItem} ${styles.userMenuItemLogout}`}
-                      role="menuitem"
-                      onClick={handleLogout}
-                    >
-                      Выйти
-                      <img src={ICON_EXIT} alt="" width={20} height={20} />
-                    </button>
-                  </div>
-                ) : null}
-              </div>
-            </div>
-          </header>
-
-          <SearchField className={styles.searchMobile} />
-
+    <StudentLayout
+      title="Главная"
+      titleMobile="Обзор"
+      subtitle="Ваше обучение"
+      activeNav="home"
+    >
           <div className={styles.cards}>
-            <section className={`${styles.card} ${styles.nearestCard}`} aria-label="Ближайший урок">
+            <section
+              className={`${styles.card} ${styles.nearestCard} ${isEmpty ? styles.nearestCardEmpty : ''}`}
+              aria-label="Ближайший урок"
+            >
+              {isEmpty ? (
+                <>
+                  <h2 className={styles.cardTitle}>Ближайший урок</h2>
+                  <CardEmptyState
+                    icon={ICON_EMPTY_SLOT}
+                    title="У вас пока нет забронированных уроков"
+                    description="Забронируйте первый урок, чтобы начать своё обучение."
+                  />
+                  <Link to={bookingTo} className={styles.btnPrimary}>
+                    Забронировать урок
+                  </Link>
+                </>
+              ) : (
+                <>
               <div className={styles.nearestTop}>
                 <h2 className={styles.cardTitle}>Ближайший урок</h2>
                 <div className={styles.nearestBody}>
@@ -578,17 +333,39 @@ export function StudentDashboard() {
                 <button type="button" className={styles.btnDisabled} disabled>
                   Войти в урок
                 </button>
-                <button type="button" className={styles.btnOutline}>
+                <button
+                  type="button"
+                  className={styles.btnOutline}
+                  onClick={() => navigate(role ? `/lesson?role=${role}` : '/lesson')}
+                >
                   Детали урока
                 </button>
               </div>
+                </>
+              )}
             </section>
 
             <section className={`${styles.card} ${styles.homeworkCard}`} aria-label="Домашние задания">
               <h2 className={styles.cardTitle}>Последние домашние задания</h2>
+              {isEmpty ? (
+                <CardEmptyState
+                  icon={ICON_EMPTY_HOMEWORK}
+                  title="Активных заданий нет"
+                  description={
+                    <>
+                      <span className={styles.emptyDescDesktop}>
+                        После урока преподаватель добавит домашнее задание, материалы и срок сдачи.
+                      </span>
+                      <span className={styles.emptyDescMobile}>
+                        Отличный день для подготовки материалов и проверки ДЗ.
+                      </span>
+                    </>
+                  }
+                />
+              ) : (
               <div className={styles.homeworkList}>
                 {HOMEWORK.map((hw) => (
-                  <button key={hw.title} type="button" className={styles.homeworkItem}>
+                  <Link key={hw.title} to={materialsTo} className={styles.homeworkItem}>
                     <div className={styles.homeworkContent}>
                       <div className={styles.homeworkHead}>
                         <span className={styles.homeworkIcon}>
@@ -610,9 +387,10 @@ export function StudentDashboard() {
                       </div>
                     </div>
                     <img src={ICON_ARROW_LITE} alt="" width={24} height={24} />
-                  </button>
+                  </Link>
                 ))}
               </div>
+              )}
             </section>
 
             <section className={`${styles.card} ${styles.calendarCard}`} aria-label="Календарь">
@@ -694,26 +472,59 @@ export function StudentDashboard() {
                     })}
                   </div>
                 </div>
-                <div className={styles.calendarLegend}>
-                  <span className={styles.legendItem}>
-                    <span className={`${styles.dot} ${styles.dotRed}`} />
-                    Завершён
-                  </span>
-                  <span className={styles.legendItem}>
-                    <span className={`${styles.dot} ${styles.dotGreen}`} />
-                    Запланирован
-                  </span>
-                  <span className={styles.legendItem}>
-                    <span className={`${styles.dot} ${styles.dotGray}`} />
-                    Перенос
-                  </span>
-                </div>
+                {isEmpty ? (
+                  <div className={styles.calendarEmpty}>
+                    <span className={styles.calendarEmptyIcon}>
+                      <img src={ICON_EMPTY_SLOT_SM} alt="" width={14} height={14} />
+                    </span>
+                    <div className={styles.calendarEmptyText}>
+                      <p className={styles.calendarEmptyLine1}>Планов пока нет</p>
+                      <p className={styles.calendarEmptyLine2}>
+                        Запланированные занятия появятся в расписании
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className={styles.calendarLegend}>
+                    <span className={styles.legendItem}>
+                      <span className={`${styles.dot} ${styles.dotRed}`} />
+                      Завершён
+                    </span>
+                    <span className={styles.legendItem}>
+                      <span className={`${styles.dot} ${styles.dotGreen}`} />
+                      Запланирован
+                    </span>
+                    <span className={styles.legendItem}>
+                      <span className={`${styles.dot} ${styles.dotGray}`} />
+                      Перенос
+                    </span>
+                  </div>
+                )}
               </div>
             </section>
 
-            <section className={`${styles.card} ${styles.upcomingCard}`} aria-label="Предстоящие уроки">
+            <section
+              className={`${styles.card} ${styles.upcomingCard} ${isEmpty ? styles.upcomingCardEmpty : ''}`}
+              aria-label="Предстоящие уроки"
+            >
               <div className={styles.upcomingTop}>
-                <h2 className={styles.cardTitle}>Предстоящие уроки</h2>
+                <h2 className={styles.cardTitle}>
+                  {isEmpty ? (
+                    <>
+                      <span className={styles.upcomingTitleDesktop}>Предстоящие уроки</span>
+                      <span className={styles.upcomingTitleMobile}>Уроки сегодня</span>
+                    </>
+                  ) : (
+                    'Предстоящие уроки'
+                  )}
+                </h2>
+                {isEmpty ? (
+                  <CardEmptyState
+                    icon={ICON_EMPTY_LESSON}
+                    title="Здесь будут ваши предстоящие уроки"
+                    description="После бронирования занятия появятся в этом разделе."
+                  />
+                ) : (
                 <div className={styles.upcomingList}>
                   {UPCOMING.map((lesson) => (
                     <button key={lesson.teacher} type="button" className={styles.upcomingItem}>
@@ -761,13 +572,17 @@ export function StudentDashboard() {
                     </button>
                   ))}
                 </div>
+                )}
               </div>
-              <button type="button" className={styles.btnPrimary}>
+              <Link to={bookingTo} className={styles.btnPrimary}>
                 Записаться ещё
-              </button>
+              </Link>
             </section>
 
-            <section className={`${styles.card} ${styles.progressCard}`} aria-label="Прогресс">
+            <section
+              className={`${styles.card} ${styles.progressCard} ${isEmpty ? styles.progressCardEmpty : ''}`}
+              aria-label="Прогресс"
+            >
               <h2 className={styles.cardTitle}>Прогресс</h2>
               <div className={styles.progressBody}>
                 <div className={styles.progressTop}>
@@ -796,16 +611,18 @@ export function StudentDashboard() {
                   </div>
                 </div>
                 <div className={styles.progressChartBlock}>
-                  <div className={styles.progressGoals}>
-                    <p className={styles.metaText}>
-                      <span className={styles.metaLabel}>Следующая цель:</span>{' '}
-                      <span className={styles.metaValue}>B1+</span>
-                    </p>
-                    <p className={styles.metaText}>
-                      <span className={styles.metaLabel}>Прогресс:</span>{' '}
-                      <span className={styles.metaValue}>85%</span>
-                    </p>
-                  </div>
+                  {isEmpty ? null : (
+                    <div className={styles.progressGoals}>
+                      <p className={styles.metaText}>
+                        <span className={styles.metaLabel}>Следующая цель:</span>{' '}
+                        <span className={styles.metaValue}>B1+</span>
+                      </p>
+                      <p className={styles.metaText}>
+                        <span className={styles.metaLabel}>Прогресс:</span>{' '}
+                        <span className={styles.metaValue}>85%</span>
+                      </p>
+                    </div>
+                  )}
                   <div className={styles.chartWrap}>
                     <div className={styles.chartLevels}>
                       {['100%', '75%', '50%', '25%', '0%'].map((label) => (
@@ -824,66 +641,72 @@ export function StudentDashboard() {
                       ))}
                     </div>
                     <div className={styles.chartPlot}>
-                      <img src={CHART_AREA} alt="" className={styles.chartArea} />
-                      <img src={CHART_LINE} alt="" className={styles.chartLine} />
-                      <img src={CHART_DOT} alt="" className={styles.chartDot} />
+                      {isEmpty ? (
+                        <p className={styles.chartEmptyMessage}>
+                          История обучения появится здесь после первого урока
+                        </p>
+                      ) : (
+                        <>
+                          <img src={CHART_AREA} alt="" className={styles.chartArea} />
+                          <img src={CHART_LINE} alt="" className={styles.chartLine} />
+                          <img src={CHART_DOT} alt="" className={styles.chartDot} />
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
+              {isEmpty ? (
+                <button type="button" className={styles.btnOutline}>
+                  Перейти к бронированию
+                </button>
+              ) : null}
             </section>
 
-            <section className={`${styles.card} ${styles.balanceCard}`} aria-label="Баланс">
+            <section
+              className={`${styles.card} ${styles.balanceCard} ${isEmpty ? styles.balanceCardEmpty : ''}`}
+              aria-label="Баланс"
+            >
               <div className={styles.balanceTop}>
                 <h2 className={styles.cardTitle}>Баланс</h2>
                 <div className={styles.balanceDiagram}>
                   <div className={styles.balanceRing}>
                     <div className={styles.balanceRingTrack} aria-hidden="true">
                       <div className={styles.balanceRingArc}>
-                        <img src={BALANCE_RING} alt="" className={styles.balanceRingImg} />
+                        <img
+                          src={isEmpty ? BALANCE_RING_EMPTY : BALANCE_RING}
+                          alt=""
+                          className={styles.balanceRingImg}
+                        />
                       </div>
                     </div>
                     <div className={styles.balanceCenter}>
-                      <span className={styles.balanceValue}>67</span>
+                      <span className={styles.balanceValue}>{isEmpty ? '0' : '67'}</span>
                       <span className={styles.balanceUnit}>кредитов</span>
                     </div>
                   </div>
-                  <div className={styles.infoBadge}>
-                    <img src={ICON_CHECK} alt="" width={20} height={20} />
-                    <span className={styles.infoBadgeText}>Хватит примерно на 5 уроков</span>
-                  </div>
+                  {isEmpty ? (
+                    <div className={`${styles.infoBadge} ${styles.infoBadgeError}`}>
+                      <img src={ICON_ATTENTION} alt="" width={20} height={20} />
+                      <span className={styles.infoBadgeText}>Баланс пуст</span>
+                    </div>
+                  ) : (
+                    <div className={styles.infoBadge}>
+                      <img src={ICON_CHECK} alt="" width={20} height={20} />
+                      <span className={styles.infoBadgeText}>Хватит примерно на 5 уроков</span>
+                    </div>
+                  )}
                 </div>
               </div>
-              <button type="button" className={styles.btnAccentOutline}>
+              <button
+                type="button"
+                className={isEmpty ? styles.btnErrorOutline : styles.btnAccentOutline}
+                onClick={() => navigate(topupTo)}
+              >
                 Пополнить баланс
               </button>
             </section>
           </div>
-        </div>
-      </div>
-
-      <nav className={styles.bottomNav} aria-label="Мобильная навигация">
-        <Link to="/home" className={`${styles.bottomNavItem} ${styles.bottomNavActive}`} aria-current="page">
-          <img src={ICON_HOME} alt="" />
-          <span>Главная</span>
-        </Link>
-        <Link to="/schedule" className={styles.bottomNavItem}>
-          <img src={ICON_CALENDAR} alt="" />
-          <span>Расписание</span>
-        </Link>
-        <button type="button" className={styles.bottomNavItem}>
-          <img src={ICON_PENCIL} alt="" />
-          <span>Запись</span>
-        </button>
-        <Link to="/materials" className={styles.bottomNavItem}>
-          <img src={ICON_MATERIALS} alt="" />
-          <span>Материалы</span>
-        </Link>
-        <button type="button" className={styles.bottomNavItem}>
-          <img src={ICON_DOTS} alt="" />
-          <span>Ещё</span>
-        </button>
-      </nav>
-    </div>
+    </StudentLayout>
   );
 }

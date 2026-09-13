@@ -49,12 +49,40 @@ const HomePage = lazy(() =>
   import('../pages/Home').then((module) => ({ default: module.HomePage })),
 );
 
-const TeacherSchedulePage = lazy(() =>
-  import('../pages/Schedule').then((module) => ({ default: module.TeacherSchedulePage })),
+const SchedulePage = lazy(() =>
+  import('../pages/Schedule').then((module) => ({ default: module.SchedulePage })),
+);
+
+const BookingPage = lazy(() =>
+  import('../pages/Booking').then((module) => ({ default: module.BookingPage })),
+);
+
+const MaterialsPage = lazy(() =>
+  import('../pages/Materials').then((module) => ({ default: module.MaterialsPage })),
+);
+
+const BalancePage = lazy(() =>
+  import('../pages/Balance').then((module) => ({ default: module.BalancePage })),
+);
+
+const TopupPage = lazy(() =>
+  import('../pages/Topup').then((module) => ({ default: module.TopupPage })),
+);
+
+const ProfilePage = lazy(() =>
+  import('../pages/Profile').then((module) => ({ default: module.ProfilePage })),
+);
+
+const ProgressPage = lazy(() =>
+  import('../pages/Progress').then((module) => ({ default: module.ProgressPage })),
+);
+
+const NotificationsPage = lazy(() =>
+  import('../pages/Notifications').then((module) => ({ default: module.NotificationsPage })),
 );
 
 const TeacherLessonPage = lazy(() =>
-  import('../pages/Lesson').then((module) => ({ default: module.TeacherLessonPage })),
+  import('../pages/Lesson').then((module) => ({ default: module.LessonPage })),
 );
 
 const TeacherStudentsPage = lazy(() =>
@@ -113,7 +141,15 @@ export function AppRouter() {
           <Route path="/users" element={<AdminUsersPage />} />
           <Route path="/finance" element={<AdminFinancePage />} />
           <Route path="/lessons" element={<AdminLessonsPage />} />
-          <Route path="/schedule" element={<TeacherSchedulePage />} />
+          <Route path="/schedule" element={<SchedulePage />} />
+          <Route path="/booking" element={<BookingPage />} />
+          <Route path="/booking/slot" element={<BookingPage />} />
+          <Route path="/materials" element={<MaterialsPage />} />
+          <Route path="/balance" element={<BalancePage />} />
+          <Route path="/balance/topup" element={<TopupPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/progress" element={<ProgressPage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/lesson" element={<TeacherLessonPage />} />
           <Route path="/students" element={<TeacherStudentsPage />} />
           <Route path="/student" element={<TeacherStudentProfilePage />} />
