@@ -19,9 +19,11 @@ import ICON_NOTIFICATION_TOP from '../../assets/icons/student/notification-top.s
 import ICON_CHEVRON from '../../assets/icons/student/chevron.svg';
 import ICON_ARROW_LITE from '../../assets/icons/student/arrow-lite.svg';
 import ICON_DOTS from '../../assets/icons/student/dots.svg';
-import ICON_NOTIF_CALENDAR from '../../assets/icons/student/notif-calendar.svg';
-import ICON_NOTIF_MESSAGE from '../../assets/icons/student/notif-message.svg';
-import ICON_NOTIF_NOTE from '../../assets/icons/student/notif-note.svg';
+import ICON_PERSON_SM from '../../assets/icons/student/person-sm.svg';
+import ICON_EXIT_MENU from '../../assets/icons/student/exit-menu.svg';
+import ICON_NOTIF_CALENDAR from '../../assets/icons/student/notifications/calendar.svg';
+import ICON_NOTIF_MESSAGE from '../../assets/icons/student/notifications/message.svg';
+import ICON_NOTIF_NOTE from '../../assets/icons/student/notifications/note.svg';
 import ICON_UNREAD_DOT from '../../assets/icons/student/unread-dot.svg';
 import STUDENT_AVATAR from '../../assets/images/student/avatar.png';
 import TEACHER_AVATAR from '../../assets/images/teacher/avatar-teacher.png';
@@ -385,8 +387,15 @@ export function StudentLayout({
                         navigate(withPreviewQuery('/profile', previewSearch));
                       }}
                     >
-                      Профиль
-                      <img src={ICON_ARROW_LITE} alt="" width={24} height={24} />
+                      <span className={styles.userMenuItemMain}>
+                        <span className={styles.userMenuIcon}>
+                          <img src={ICON_PERSON_SM} alt="" width={14} height={14} />
+                        </span>
+                        Профиль
+                      </span>
+                      <span className={styles.userMenuIcon}>
+                        <img src={ICON_ARROW_LITE} alt="" width={14} height={14} />
+                      </span>
                     </button>
                     <button
                       type="button"
@@ -394,8 +403,12 @@ export function StudentLayout({
                       role="menuitem"
                       onClick={handleLogout}
                     >
-                      Выйти
-                      <img src={ICON_EXIT} alt="" width={20} height={20} />
+                      <span className={styles.userMenuItemMain}>
+                        <span className={styles.userMenuIcon}>
+                          <img src={ICON_EXIT_MENU} alt="" width={14} height={14} />
+                        </span>
+                        Выйти
+                      </span>
                     </button>
                   </div>
                 ) : null}

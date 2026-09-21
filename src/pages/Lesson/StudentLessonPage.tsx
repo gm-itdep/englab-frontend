@@ -85,9 +85,11 @@ export function StudentLessonPage() {
       title="Страница урока"
       subtitle="Рабочая сессия и материалы"
       activeNav="schedule"
+      hideSearch
       hideMobileSearch
     >
       <div className={styles.layout}>
+        <div className={styles.main}>
         <section className={styles.lessonCard} aria-label="Урок">
           <div className={styles.lessonTop}>
             <span className={styles.statusBadge}>
@@ -129,58 +131,6 @@ export function StudentLessonPage() {
             Войти в урок
           </button>
         </section>
-
-        <aside className={styles.side}>
-          <section className={styles.teacherCard} aria-label="Преподаватель">
-            <img src={PHOTO_PETR} alt="" className={styles.teacherPhoto} width={275} height={320} />
-            <div className={styles.teacherInfo}>
-              <div className={styles.teacherNameBlock}>
-                <h2 className={styles.teacherName}>Пётр Васильев</h2>
-                <p className={styles.teacherRating}>
-                  <span className={styles.starIcon}>
-                    <img src={ICON_STAR} alt="" width={17} height={17} />
-                  </span>
-                  4,9
-                </p>
-              </div>
-              <div className={styles.teacherParams}>
-                <p className={styles.teacherLang}>
-                  Английский
-                  <span className={styles.fileDot} aria-hidden="true">
-                    •
-                  </span>
-                  Британский акцент
-                </p>
-                <div className={styles.tagRow}>
-                  <span className={styles.tag}>Business</span>
-                  <span className={styles.tag}>Speaking</span>
-                  <span className={styles.tag}>Interview</span>
-                </div>
-                <p className={styles.teacherLevels}>
-                  <span className={styles.levelsLabel}>Уровни:</span>
-                  <span>A2-C1</span>
-                </p>
-              </div>
-            </div>
-            <div className={styles.teacherActions}>
-              <button type="button" className={styles.btnOutline} onClick={() => setAskOpen(true)}>
-                Задать вопрос
-              </button>
-              <button type="button" className={styles.btnGhost}>
-                Пожаловаться
-              </button>
-            </div>
-          </section>
-
-          <section className={styles.hintCard} aria-label="Подключение">
-            <h2 className={styles.cardTitle}>Подключение</h2>
-            <div className={styles.hintText}>
-              <p>Платформа: Яндекс Телемост</p>
-              <p>Ссылка откроется в отдельной вкладке браузера</p>
-              <p>Перед уроком проверьте камеру, микрофон и стабильность интернета</p>
-            </div>
-          </section>
-        </aside>
 
         <section
           className={[styles.filesCard, isEmpty ? styles.filesCardEmpty : ''].filter(Boolean).join(' ')}
@@ -289,6 +239,59 @@ export function StudentLessonPage() {
             {editingNote ? 'Сохранить' : hasNote ? 'Изменить' : 'Добавить заметку'}
           </button>
         </section>
+        </div>
+
+        <aside className={styles.side}>
+          <section className={styles.teacherCard} aria-label="Преподаватель">
+            <img src={PHOTO_PETR} alt="" className={styles.teacherPhoto} width={275} height={320} />
+            <div className={styles.teacherInfo}>
+              <div className={styles.teacherNameBlock}>
+                <h2 className={styles.teacherName}>Пётр Васильев</h2>
+                <p className={styles.teacherRating}>
+                  <span className={styles.starIcon}>
+                    <img src={ICON_STAR} alt="" width={17} height={17} />
+                  </span>
+                  4,9
+                </p>
+              </div>
+              <div className={styles.teacherParams}>
+                <p className={styles.teacherLang}>
+                  Английский
+                  <span className={styles.fileDot} aria-hidden="true">
+                    •
+                  </span>
+                  Британский акцент
+                </p>
+                <div className={styles.tagRow}>
+                  <span className={styles.tag}>Business</span>
+                  <span className={styles.tag}>Speaking</span>
+                  <span className={styles.tag}>Interview</span>
+                </div>
+                <p className={styles.teacherLevels}>
+                  <span className={styles.levelsLabel}>Уровни:</span>
+                  <span>A2-C1</span>
+                </p>
+              </div>
+            </div>
+            <div className={styles.teacherActions}>
+              <button type="button" className={styles.btnOutline} onClick={() => setAskOpen(true)}>
+                Задать вопрос
+              </button>
+              <button type="button" className={styles.btnGhost}>
+                Пожаловаться
+              </button>
+            </div>
+          </section>
+
+          <section className={styles.hintCard} aria-label="Подключение">
+            <h2 className={styles.cardTitle}>Подключение</h2>
+            <div className={styles.hintText}>
+              <p>Платформа: Яндекс Телемост</p>
+              <p>Ссылка откроется в отдельной вкладке браузера</p>
+              <p>Перед уроком проверьте камеру, микрофон и стабильность интернета</p>
+            </div>
+          </section>
+        </aside>
       </div>
 
       {askOpen ? (

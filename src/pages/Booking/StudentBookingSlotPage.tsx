@@ -278,35 +278,35 @@ function SelectedTeacherCard({
       <div className={styles.teacherBody}>
         <div className={styles.teacherMain}>
           <img className={styles.teacherPhoto} src={teacher.photo} alt="" width={64} height={64} />
-          <div className={styles.teacherInfo}>
-            <div className={styles.teacherHeading}>
-              <p className={styles.teacherName}>{teacher.name}</p>
-              <p className={styles.rating}>
-                <span className={styles.starWrap}>
-                  <img src={ICON_STAR} alt="" width={17} height={17} />
-                </span>
-                {teacher.rating}
-              </p>
-            </div>
-            <div className={styles.teacherMeta}>
-              <p className={styles.meta}>
-                {teacher.language}
-                <span className={styles.metaDot}> • </span>
-                {teacher.accent}
-              </p>
-              <ul className={styles.tags}>
-                {teacher.tags.map((tag) => (
-                  <li key={tag} className={styles.tag}>
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-              <p className={styles.levels}>
-                <span className={styles.levelsLabel}>Уровни:</span>
-                <span>{teacher.levels}</span>
-              </p>
-            </div>
+          <div className={styles.teacherHeading}>
+            <p className={styles.teacherName}>{teacher.name}</p>
+            <p className={styles.rating}>
+              <span className={styles.starWrap}>
+                <img src={ICON_STAR} alt="" width={17} height={17} />
+              </span>
+              {teacher.rating}
+            </p>
           </div>
+        </div>
+        <div className={styles.teacherMeta}>
+          <div className={styles.teacherMetaTop}>
+            <p className={styles.meta}>
+              {teacher.language}
+              <span className={styles.metaDot}> • </span>
+              {teacher.accent}
+            </p>
+            <ul className={styles.tags}>
+              {teacher.tags.map((tag) => (
+                <li key={tag} className={styles.tag}>
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <p className={styles.levels}>
+            <span className={styles.levelsLabel}>Уровни:</span>
+            <span>{teacher.levels}</span>
+          </p>
         </div>
         <div className={styles.teacherDetails}>
           <div className={styles.detailRow}>

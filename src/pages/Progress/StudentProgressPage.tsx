@@ -156,6 +156,7 @@ export function StudentProgressPage() {
       title="Прогресс"
       subtitle="Ваш результат и развитие"
       activeNav="progress"
+      hideSearch
       hideMobileSearch
     >
       <div className={[styles.layout, isEmpty ? styles.layoutEmpty : ''].filter(Boolean).join(' ')}>

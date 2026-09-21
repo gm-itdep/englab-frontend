@@ -184,7 +184,7 @@ export const ru = {
     filterType: 'Тип урока',
     filterTypeValue: 'Индивидуально',
     filterDaysOptions: [
-      'Все цели',
+      'Все дни',
       'Понедельник',
       'Вторник',
       'Среда',

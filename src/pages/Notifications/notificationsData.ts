@@ -52,7 +52,7 @@ const STUDENT_NOTIFICATIONS: NotificationItem[] = [
     title: 'Урок скоро начнётся',
     desc: 'Business Negotiations начнётся сегодня в 19:00.',
     time: '16:30',
-    unread: true,
+    unread: false,
   },
   {
     id: '2',
@@ -62,7 +62,7 @@ const STUDENT_NOTIFICATIONS: NotificationItem[] = [
     title: 'Преподаватель оставил комментарий',
     desc: 'К домашнему заданию по уроку Present Perfect добавлен комментарий.',
     time: '14:15',
-    unread: true,
+    unread: false,
   },
   {
     id: '3',

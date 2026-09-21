@@ -104,7 +104,7 @@ export const DEFAULT_FILTERS: FilterValues = {
 };
 
 export const SLOT_DAY_OPTIONS = [
-  'Все цели',
+  'Все дни',
   'Понедельник',
   'Вторник',
   'Среда',

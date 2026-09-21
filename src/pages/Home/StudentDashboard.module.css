@@ -7,7 +7,7 @@
 .shell {
   display: flex;
   gap: 24px;
-  align-items: flex-start;
+  align-items: stretch;
   max-width: 1440px;
   margin: 0 auto;
   padding: 32px;
@@ -16,19 +16,16 @@
 
 .sidebar {
   width: 96px;
-  height: 960px;
-  max-height: calc(100vh - 64px);
   flex: 0 0 96px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  align-self: stretch;
+  min-height: 0;
   background: var(--color-gray-0);
   border-radius: 8px;
   box-shadow: 0 0 12px rgba(131, 131, 131, 0.24);
   overflow: hidden;
-  position: sticky;
-  top: 32px;
-  align-self: flex-start;
   z-index: 30;
 }
 
@@ -315,7 +312,6 @@
 }
 
 .notificationWrap {
-  position: relative;
   flex-shrink: 0;
 }
 
@@ -447,10 +443,11 @@
   top: calc(100% + 8px);
   right: 0;
   z-index: 40;
-  width: 200px;
+  width: 263px;
   display: flex;
   flex-direction: column;
-  padding: 8px;
+  align-items: stretch;
+  padding: 4px;
   background: var(--color-gray-0);
   border-radius: var(--radius-md);
   box-shadow: 0 0 6px rgba(131, 131, 131, 0.24);
@@ -460,20 +457,44 @@
 .userMenuItem {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 8px;
   width: 100%;
-  padding: 12px;
+  padding: 8px 16px;
   border: none;
   border-radius: var(--radius-sm);
   background: transparent;
   cursor: pointer;
   font-family: var(--font-family-base);
   font-size: var(--font-size-body-s);
-  font-weight: 400;
+  font-weight: 300;
   line-height: var(--line-height-body-s);
-  color: var(--color-gray-1000);
+  color: var(--color-gray-900);
+  text-align: left;
   box-sizing: border-box;
+}
+
+.userMenuItemMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userMenuIcon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.userMenuIcon img {
+  display: block;
+  width: 14px;
+  height: 14px;
 }
 
 .userMenuItemLogout {
@@ -558,6 +579,10 @@
 .notifItemUnread {
   background: var(--color-primary-50);
   border-bottom-color: var(--color-primary-200);
+}
+
+.notifItemUnread:last-child {
+  border-bottom-color: transparent;
 }
 
 .notifItemBody {
@@ -722,6 +747,13 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
+}
+
+.nearestLessonHead {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   width: 100%;
 }
 
@@ -950,6 +982,22 @@
   text-align: left;
   cursor: pointer;
   box-sizing: border-box;
+}
+
+.homeworkArrow {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.homeworkArrow img {
+  display: block;
+  width: 16.8px;
+  height: 16.8px;
 }
 
 .homeworkContent {
@@ -1300,8 +1348,19 @@
 }
 
 .upcomingArrow {
-  display: block;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.upcomingArrow img {
+  display: block;
+  width: 22.4px;
+  height: 22.4px;
 }
 
 .progressCard {
@@ -1378,6 +1437,13 @@
   justify-content: space-between;
   gap: 8px;
   width: 100%;
+}
+
+.progressPercent {
+  flex: 0 0 auto;
+  margin-left: auto;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .chartWrap {
@@ -1479,6 +1545,7 @@
   width: 352px;
   height: 440px;
   justify-content: space-between;
+  gap: 24px;
 }
 
 .balanceTop {
@@ -1946,9 +2013,22 @@
     line-height: 20px;
   }
 
+  .nearestCard .cardTitle {
+    height: 22px;
+  }
+
   .lessonTime {
     font-size: 16px;
     line-height: 20px;
+    height: 22px;
+  }
+
+  .nearestBody {
+    gap: 12px;
+  }
+
+  .countdownBlockWrap {
+    gap: 8px;
   }
 
   .upcomingItem {
@@ -2003,6 +2083,24 @@
   .upcomingBadgeConfirmed {
     background: var(--color-info-50);
     color: var(--color-info-500);
+  }
+
+  .progressStats {
+    flex-wrap: nowrap;
+  }
+
+  .progressStat {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .progressStatText {
+    width: 100%;
+    flex: none;
+  }
+
+  .progressStatText .metaLabel {
+    white-space: nowrap;
   }
 
   .balanceCard {

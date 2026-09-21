@@ -249,6 +249,7 @@ export function StudentProfilePage() {
       title="Профиль"
       subtitle="Личные данные и настройки"
       activeNav="profile"
+      hideSearch
       hideMobileSearch
     >
       <section className={styles.card}>

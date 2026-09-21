@@ -1,5 +1,5 @@
-import { lazy, Suspense } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { lazy, Suspense, useLayoutEffect } from 'react';
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 const LoginPage = lazy(() =>
   import('../pages/Login').then((module) => ({ default: module.LoginPage })),
@@ -107,6 +107,19 @@ const AdminLessonsPage = lazy(() =>
   import('../pages/Lessons').then((module) => ({ default: module.AdminLessonsPage })),
 );
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    document.getElementById('root')?.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 function RouteFallback() {
   return (
     <div
@@ -126,6 +139,7 @@ function RouteFallback() {
 export function AppRouter() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || '/'}>
+      <ScrollToTop />
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           <Route path="/login" element={<LoginPage />} />

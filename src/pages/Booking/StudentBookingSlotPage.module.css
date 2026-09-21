@@ -642,7 +642,7 @@
 .summaryCard {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
   width: 100%;
   padding: 24px;
   background: var(--color-gray-0);
@@ -663,14 +663,14 @@
 .teacherBody {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
   width: 100%;
 }
 
 .teacherMain {
   display: flex;
-  align-items: flex-start;
-  gap: 8px;
+  align-items: center;
+  gap: 16px;
   width: 100%;
 }
 
@@ -683,21 +683,12 @@
   display: block;
 }
 
-.teacherInfo {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
 .teacherHeading {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 8px;
-  width: 100%;
+  min-width: 0;
 }
 
 .teacherName {
@@ -712,7 +703,7 @@
 .rating {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   margin: 0;
   font-family: var(--font-family-base);
   font-size: var(--font-size-caption);
@@ -739,12 +730,23 @@
 .teacherMeta {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 16px;
+  width: 100%;
+}
+
+.teacherMetaTop {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   width: 100%;
 }
 
 .meta {
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
   font-family: var(--font-family-base);
   font-size: var(--font-size-caption);
   font-weight: 400;
@@ -800,7 +802,7 @@
   flex-direction: column;
   gap: 8px;
   width: 100%;
-  padding-top: 8px;
+  padding-top: 12px;
   border-top: 1px solid var(--color-gray-200);
 }
 

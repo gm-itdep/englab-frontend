@@ -102,6 +102,11 @@ const MONTH_GENITIVE = [
 
 const WEEK_HOURS = [8, 10, 12, 14, 16, 18] as const;
 const WEEK_SLOT_PX = 45;
+const WEEK_GRID_START_HOUR = 8;
+
+function weekEventTop(hour: number): number {
+  return (hour - WEEK_GRID_START_HOUR + 1) * WEEK_SLOT_PX;
+}
 
 const WEEK_STATUS_LABEL: Record<WeekStatus, string> = {
   done: 'Пройден',
@@ -622,7 +627,7 @@ export function StudentSchedulePage() {
                               key={`${event.dateKey}-${event.hour}-${event.status}-${eventIndex}`}
                               type="button"
                               className={[styles.weekEvent, weekEventClass(event.status)].join(' ')}
-                              style={{ top: (event.hour - 8) * WEEK_SLOT_PX }}
+                              style={{ top: weekEventTop(event.hour) }}
                             >
                               <span className={styles.weekEventMeta}>
                                 <span className={styles.weekEventTime}>{formatHour(event.hour)}</span>

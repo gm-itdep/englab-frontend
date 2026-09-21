@@ -1,38 +1,23 @@
 .layout {
   display: grid;
-  grid-template-columns: 1fr 323px;
-  grid-template-areas:
-    'lesson side'
-    'files side'
-    'homework side'
-    'note side';
+  grid-template-columns: minmax(0, 1fr) 323px;
   gap: 16px;
   align-items: start;
   width: 100%;
 }
 
-.lessonCard {
-  grid-area: lesson;
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
 }
 
 .side {
-  grid-area: side;
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 323px;
-}
-
-.filesCard {
-  grid-area: files;
-}
-
-.homeworkCard {
-  grid-area: homework;
-}
-
-.noteCard {
-  grid-area: note;
 }
 
 .lessonCard,
@@ -643,17 +628,32 @@
 @media (max-width: 1407px) {
   .layout {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      'lesson'
-      'side'
-      'files'
-      'homework'
-      'note';
+  }
+
+  .main {
+    display: contents;
+  }
+
+  .lessonCard {
+    order: 1;
   }
 
   .side {
+    order: 2;
     width: 100%;
     flex-direction: column;
+  }
+
+  .filesCard {
+    order: 3;
+  }
+
+  .homeworkCard {
+    order: 4;
+  }
+
+  .noteCard {
+    order: 5;
   }
 
   .hintCard {

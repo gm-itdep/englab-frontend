@@ -297,12 +297,14 @@ function MaterialRow({ item }: { item: MaterialItem }) {
           <p className={styles.rowTitle}>{item.title}</p>
         </div>
         <div className={styles.rowDetails}>
-          <div className={styles.rowMeta}>
-            <span className={styles.metaCategory}>{item.category}</span>
-            <span className={styles.metaTeacher}>{item.teacher}</span>
-            <span className={styles.metaDate}>{item.date}</span>
+          <div className={styles.rowDetailLeft}>
+            <div className={styles.rowMeta}>
+              <span className={styles.metaCategory}>{item.category}</span>
+              <span className={styles.metaTeacher}>{item.teacher}</span>
+              <span className={styles.metaDate}>{item.date}</span>
+            </div>
+            <StatusBadge item={item} />
           </div>
-          <StatusBadge item={item} />
           <ActionButton item={item} />
         </div>
       </div>

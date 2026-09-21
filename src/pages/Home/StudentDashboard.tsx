@@ -8,6 +8,7 @@ import ICON_BOOK from '../../assets/icons/student/book.svg';
 import ICON_INFO from '../../assets/icons/student/info.svg';
 import ICON_FILE from '../../assets/icons/student/file.svg';
 import ICON_ARROW_LITE from '../../assets/icons/student/arrow-lite.svg';
+import ICON_ARROW_LITE_SM from '../../assets/icons/student/arrow-lite-16.svg';
 import ICON_ARROW from '../../assets/icons/student/arrow.svg';
 import ICON_PURPOSE from '../../assets/icons/student/purpose.svg';
 import ICON_LESSON from '../../assets/icons/student/lesson.svg';
@@ -291,21 +292,23 @@ export function StudentDashboard() {
               <div className={styles.nearestTop}>
                 <h2 className={styles.cardTitle}>Ближайший урок</h2>
                 <div className={styles.nearestBody}>
-                  <p className={styles.lessonTime}>{countdown.lessonTimeLabel}</p>
-                  <div className={styles.metaLines}>
-                    <div className={styles.metaRow}>
-                      <img src={ICON_PERSON_SM} alt="" width={20} height={20} />
-                      <p className={styles.metaText}>
-                        <span className={styles.metaLabel}>Преподаватель:</span>{' '}
-                        <span className={styles.metaValue}>Маргарита Васильева</span>
-                      </p>
-                    </div>
-                    <div className={styles.metaRow}>
-                      <img src={ICON_BOOK} alt="" width={20} height={20} />
-                      <p className={styles.metaText}>
-                        <span className={styles.metaLabel}>Тема:</span>{' '}
-                        <span className={styles.metaValue}>Разговорный для путешествий</span>
-                      </p>
+                  <div className={styles.nearestLessonHead}>
+                    <p className={styles.lessonTime}>{countdown.lessonTimeLabel}</p>
+                    <div className={styles.metaLines}>
+                      <div className={styles.metaRow}>
+                        <img src={ICON_PERSON_SM} alt="" width={20} height={20} />
+                        <p className={styles.metaText}>
+                          <span className={styles.metaLabel}>Преподаватель:</span>{' '}
+                          <span className={styles.metaValue}>Маргарита Васильева</span>
+                        </p>
+                      </div>
+                      <div className={styles.metaRow}>
+                        <img src={ICON_BOOK} alt="" width={20} height={20} />
+                        <p className={styles.metaText}>
+                          <span className={styles.metaLabel}>Тема:</span>{' '}
+                          <span className={styles.metaValue}>Разговорный для путешествий</span>
+                        </p>
+                      </div>
                     </div>
                   </div>
                   <div className={styles.countdownBlockWrap}>
@@ -386,7 +389,9 @@ export function StudentDashboard() {
                         <p className={styles.homeworkHint}>{hw.hint}</p>
                       </div>
                     </div>
-                    <img src={ICON_ARROW_LITE} alt="" width={24} height={24} />
+                    <span className={styles.homeworkArrow}>
+                      <img src={ICON_ARROW_LITE_SM} alt="" width={16.8} height={16.8} />
+                    </span>
                   </Link>
                 ))}
               </div>
@@ -562,13 +567,9 @@ export function StudentDashboard() {
                           <span className={styles.metaValue}>{lesson.time}</span>
                         </span>
                       </div>
-                      <img
-                        src={ICON_ARROW_LITE}
-                        alt=""
-                        width={32}
-                        height={32}
-                        className={styles.upcomingArrow}
-                      />
+                      <span className={styles.upcomingArrow}>
+                        <img src={ICON_ARROW_LITE} alt="" width={22.4} height={22.4} />
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -617,7 +618,7 @@ export function StudentDashboard() {
                         <span className={styles.metaLabel}>Следующая цель:</span>{' '}
                         <span className={styles.metaValue}>B1+</span>
                       </p>
-                      <p className={styles.metaText}>
+                      <p className={`${styles.metaText} ${styles.progressPercent}`}>
                         <span className={styles.metaLabel}>Прогресс:</span>{' '}
                         <span className={styles.metaValue}>85%</span>
                       </p>
