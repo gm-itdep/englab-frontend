@@ -169,7 +169,7 @@ export function StudentLayout({
       <div className={styles.shell}>
         <aside className={styles.sidebar} aria-label="Навигация">
           <div className={styles.logoWrap}>
-            <img src={LOGO_COMPACT} alt="" className={styles.logoCompact} width={38} height={26} />
+            <img src={LOGO_COMPACT} alt="" className={styles.logoCompact} width={48} height={36} />
             <img src={LOGO_FULL} alt="EngLab" className={styles.logoFull} width={110} height={27} />
           </div>
           <div className={styles.sidebarBody}>

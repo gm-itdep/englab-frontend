@@ -44,6 +44,7 @@
   height: 120px;
   padding: 24px 32px;
   box-sizing: border-box;
+  overflow: visible;
 }
 
 .sidebar:hover .logoWrap,
@@ -52,9 +53,11 @@
 }
 
 .logoCompact {
-  width: 37.787px;
-  height: 25.532px;
+  width: 48px;
+  height: 35.745px;
   display: block;
+  flex-shrink: 0;
+  max-width: none;
   object-fit: contain;
 }
 

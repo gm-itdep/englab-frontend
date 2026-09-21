@@ -7,7 +7,7 @@ import ICON_PERSON_SM from '../../assets/icons/student/person-sm.svg';
 import ICON_BOOK from '../../assets/icons/student/book.svg';
 import ICON_INFO from '../../assets/icons/student/info.svg';
 import ICON_FILE from '../../assets/icons/student/file.svg';
-import ICON_ARROW_LITE from '../../assets/icons/student/arrow-lite.svg';
+import ICON_ARROW_LITE from '../../assets/icons/student/arrow-lite-10x20.svg';
 import ICON_ARROW_LITE_SM from '../../assets/icons/student/arrow-lite-16.svg';
 import ICON_ARROW from '../../assets/icons/student/arrow.svg';
 import ICON_PURPOSE from '../../assets/icons/student/purpose.svg';
@@ -568,7 +568,7 @@ export function StudentDashboard() {
                         </span>
                       </div>
                       <span className={styles.upcomingArrow}>
-                        <img src={ICON_ARROW_LITE} alt="" width={22.4} height={22.4} />
+                        <img src={ICON_ARROW_LITE} alt="" width={12} height={22} />
                       </span>
                     </button>
                   ))}

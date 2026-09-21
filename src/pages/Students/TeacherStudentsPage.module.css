@@ -120,10 +120,12 @@
 }
 
 .logoCompact {
-  width: 37.787px;
-  height: 25.532px;
+  width: 48px;
+  height: 35.745px;
   object-fit: contain;
   display: block;
+  flex-shrink: 0;
+  max-width: none;
 }
 
 .logoFull {

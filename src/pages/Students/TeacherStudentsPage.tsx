@@ -106,7 +106,7 @@ function Sidebar({ onLogout }: { onLogout: () => void }) {
     <aside className={styles.sidebar} aria-label="Навигация">
       <div className={styles.logoMark}>
         <img src={logoEnglab} alt={t.common.brand} className={styles.logoFull} width={110} height={27} />
-        <img src={iconLogoMark} alt="" className={styles.logoCompact} width={38} height={26} />
+        <img src={iconLogoMark} alt="" className={styles.logoCompact} width={48} height={36} />
       </div>
       <div className={styles.sidebarMenu}>
         <nav className={styles.sidebarNav}>
